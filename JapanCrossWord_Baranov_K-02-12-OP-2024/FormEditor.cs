@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace JapanCrossWord_Baranov_K_02_12_OP_2024
@@ -19,6 +21,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         public int sz; // размер кнопок
         string gov = ""; // значение горизонтали
         string gog = ""; // значение вертикали
+        string level = "";
 
         public FormEditor()
         {
@@ -32,7 +35,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void exit_Click(object sender, EventArgs e)
         {
-            FormStart frm = new FormStart();    
+            FormStart frm = new FormStart();
             this.Hide();
             frm.ShowDialog();
         }
@@ -47,8 +50,14 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void change_game() //задаём параметры
         {
+
             cmbgame.Text = txtname.Text;
-              if (sz!=numb.Value)sz = (int)numb.Value;
+            if (grdb != null)
+            {
+                if (grdb.GetLength(0) != (int)numx.Value) gog = "";
+                if (grdb.GetLength(1) != (int)numy.Value) gov = "";
+            }
+            if (sz != numb.Value) sz = (int)numb.Value;
             if (grdb == null) grdb = new char[(int)numx.Value, (int)numy.Value];
             else
             {
@@ -87,8 +96,8 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     pnlpole.Controls.Add(btn); //добаляем на форму
 
                     //подписываем на события
-                  btn.MouseDown += Button_MouseDown;
-                  btn.MouseEnter += Button_MouseEnter;
+                    btn.MouseDown += Button_MouseDown;
+                    btn.MouseEnter += Button_MouseEnter;
                 }
             }
         }
@@ -116,15 +125,15 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void Button_MouseDown(object sender, MouseEventArgs e) //обрабатываем взаимодействие с сеткой кнопок
         {
             Button sbtn = (Button)sender; //нажатая кнопка
-                if (grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] == '0')
-                {
-                    sbtn.BackColor = Color.Black;
-                    grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '1';
-                }
-                else
-                {
-                    sbtn.BackColor = Color.White;
-                    grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
+            if (grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] == '0')
+            {
+                sbtn.BackColor = Color.Black;
+                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '1';
+            }
+            else
+            {
+                sbtn.BackColor = Color.White;
+                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
 
             }
         }
@@ -132,7 +141,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void vertical() //вертикаль
         {
             int index = 0;
-
             for (int y = 0; y < grdb.GetLength(1); y++)
             {
                 for (int x = 0; x < 4; x++)
@@ -167,48 +175,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     lbl.MouseDown += lbl_Click;
                 }
             }
-            if (gov != "")
-            {
-                string[,] vm = new string[4, gov.Length / 8];
-                string[,] vmv = new string[4, (int)numy.Value];
-                index = 0;
-                for (int y = 0; y < grdb.GetLength(1); y++)
-                {
-                    for (int x = 0; x < 4; x++)
-                    {
-                        if (index + 1 < gov.Length)
-                        {
-                            vm[x, y] = $"{gov[index]}{gov[index + 1]}";
-                            index += 2;
-                        }
-                        else vm[x, y] = "00";
-                    }
-                }
-
-                for (int i = 0; i < 4; i++)
-                {
-                    for (int j = 0; j < Math.Min((int)numy.Value, gov.Length / 8); j++)
-                    {
-                        if (i<vm.GetLength(0) && j<vm.GetLength(1))vmv[i, j] = vm[i, j];
-                    }
-                }
-                vm = vmv;
-                gov = "";
-                for (int y = 0; y < (int)numy.Value; y++)
-                {
-                    for (int x = 0; x < 4; x++)
-                    {
-                        gov += $"{int.Parse(vm[x, y]):D2}";
-                    }
-                }
-            }
         }
         private void lbl_Click(object sender, EventArgs e)
         {
             Label lbl = (Label)sender;
-            int vl=0;
-            Point lbll = new Point(0,0);
-            if (lbl.Text != "")  vl = int.Parse(lbl.Text);
+            int vl = 0;
+            Point lbll = new Point(0, 0);
+            if (lbl.Text != "") vl = int.Parse(lbl.Text);
             if (lbl.Parent.Name == "pnlv")
             {
                 if (vl >= grdb.GetLength(1)) vl = 0;
@@ -222,11 +195,11 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             if (vl != 0)
             {
                 lbl.Text = vl.ToString();
-                lbl.BackColor= Color.LightGray;
+                lbl.BackColor = Color.LightGray;
             }
             else
-            { 
-                lbl.Text = ""; 
+            {
+                lbl.Text = "";
                 lbl.BackColor = Color.White;
             }
             gog = "";
@@ -259,9 +232,9 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     lbll.X = x;
                     lbll.Y = y;
-                    foreach(Label lblc in pnlg.Controls)
-                    { 
-                        if (((Point)lblc.Tag).X==lbll.X && ((Point)lblc.Tag).Y == lbll.Y)lbl=lblc;
+                    foreach (Label lblc in pnlg.Controls)
+                    {
+                        if (((Point)lblc.Tag).X == lbll.X && ((Point)lblc.Tag).Y == lbll.Y) lbl = lblc;
                     }
                     if (lbl.Parent.Name == "pnlg")
                     {
@@ -272,7 +245,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         }
                     }
                 }
-
             }
         }
         private void gorizontal() //горизонталь
@@ -284,7 +256,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     // настройка стиля
                     Label lbl = new Label();
-                    if (gog =="")lbl.BackColor = Color.White;
+                    if (gog == "") lbl.BackColor = Color.White;
                     lbl.Width = sz; lbl.Height = sz;
                     lbl.FlatStyle = FlatStyle.Flat;
                     lbl.BorderStyle = BorderStyle.FixedSingle;
@@ -313,54 +285,46 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     lbl.MouseDown += lbl_Click;
                 }
             }
-            if (gog != "")
-            {
-                string[,] gm = new string[gog.Length / 3, 3];
-                string[,] gmv = new string[(int)numx.Value, 3];
-                index = 0;
-                for (int y = 0; y < 3; y++)
-                {
-                    Console.WriteLine();
-                    for (int x = 0; x < grdb.GetLength(0); x++)
-                    {
-                        if (index + 1 < gog.Length)
-                        {
-                            gm[x, y] = $"{gog[index]}{gog[index + 1]}";
-                            index += 2;
-                            Console.Write(gm[x, y]);
-                        }
-                        else gm[x, y] = "00";
-                    }
-                }
-                for (int j = 0; j < 3; j++)
-                {
-                    for (int i = 0; i < Math.Min((int)numx.Value, gog.Length / 3); i++)
-                    {
-                        gmv[i, j] = gm[i, j];
-                    }
-                }
-                gm = gmv;
-                Console.WriteLine(gog);
-                gog = "";
-                for (int y = 0; y < 3; y++)
-                {
-                    Console.WriteLine("");
-                    for (int x = 0; x < (int)numx.Value; x++)
-                    {
-                        Console.Write(gm[x, y]);
-                        gog += $"{int.Parse(gm[x, y]):D2}";
-                    }
-                }
-            }
         }
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
-                clear();
-                change_game();
-                grid();
-                gorizontal();
-                vertical();
+            level_save();
+            clear();
+            change_game();
+            grid();
+            gorizontal();
+            vertical();
+
+
+        }
+        private void level_save()
+        {
+            string notv = "";
+            for (int y = 0; y < grdb.GetLength(1); y++)
+            {
+                for (int x = 0; x < grdb.GetLength(0); x++)
+                {
+                    notv += grdb[x, y];
+                }
+            }
+            if (notv.Contains("1"))
+            {
+                if (gov != "")
+                {
+                    if (gog != "")
+                    {
+                        Console.WriteLine(notv);
+                        level = $"{numx.Value}x{numy.Value}\n";
+                        level += $"{numb.Value}\n";
+                        level += $"{gog}\n{gov}\n";
+                        level += $"{notv}";
+                    }
+                    else MessageBox.Show("Горизонаталь не заполненна", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else MessageBox.Show("Вертикаль не заполненна", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else MessageBox.Show("Поле пусто", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         private void clear() //очистка
         {
@@ -385,7 +349,47 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void btnsave_Click(object sender, EventArgs e)
         {
+            string notv = "";
+            for (int y = 0; y < grdb.GetLength(1); y++)
+            {
+                for (int x = 0; x < grdb.GetLength(0); x++)
+                {
+                    notv += grdb[x, y];
+                }
+            }
+            if (notv.Contains("1"))
+            {
+                if (gov != "")
+                {
+                    if (gog != "")
+                    {
+                        Console.WriteLine(notv);
+                        level = $"{numx.Value}x{numy.Value}\n";
+                        level += $"{numb.Value}\n";
+                        level += $"{gov}\n{gog}\n";
+                        level += $"{notv}";
 
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.Filter = "Level files (*.lvl)|*.lvl|All files (*.*)|*.*";
+                        saveFileDialog.FileName = $"{cmbgame.Text}.lvl";
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            FileStream lvl = new FileStream(filepath, FileMode.Create);
+                            StreamWriter lvlf = new StreamWriter(lvl);
+                            lvlf.WriteLine(level);
+                            lvlf.Close();
+                            lvlf.Dispose();
+                            lvl.Dispose();
+                        }
+                        
+                     }
+                     else MessageBox.Show("Горизонаталь не заполненна", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else MessageBox.Show("Вертикаль не заполненна", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else MessageBox.Show("Поле пусто", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+
     }
 }
