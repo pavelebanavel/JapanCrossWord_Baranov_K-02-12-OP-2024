@@ -30,14 +30,17 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             {
                 FormGame frm = new FormGame();
                 this.Hide();
+ frm.cmbgame.Text=cmbgame.Text;
                 frm.ShowDialog();
-                frm.cmbgame.Text=cmbgame.Text;
+                frm.Dispose();
+               
             }
             else
             {
                 FormEditor frme = new FormEditor();
                 this.Hide();
                 frme.ShowDialog();
+                frme.Dispose();
             }
         }
 

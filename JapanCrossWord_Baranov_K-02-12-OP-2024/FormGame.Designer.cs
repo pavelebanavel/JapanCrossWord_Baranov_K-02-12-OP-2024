@@ -151,7 +151,8 @@
             "Game1",
             "Game2",
             "Game3",
-            "Editor"});
+            "Editor",
+            "Import"});
             this.cmbgame.Location = new System.Drawing.Point(19, 4);
             this.cmbgame.Name = "cmbgame";
             this.cmbgame.Size = new System.Drawing.Size(121, 39);
