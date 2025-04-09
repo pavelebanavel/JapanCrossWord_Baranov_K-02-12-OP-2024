@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JapanCrossWord_Baranov_K-02-12-OP-2024", "JapanCrossWord_Baranov_K-02-12-OP-2024\JapanCrossWord_Baranov_K-02-12-OP-2024.csproj", "{1AB80A2D-B5A8-4FF2-8C1A-5A489E7AFFDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AB80A2D-B5A8-4FF2-8C1A-5A489E7AFFDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AB80A2D-B5A8-4FF2-8C1A-5A489E7AFFDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AB80A2D-B5A8-4FF2-8C1A-5A489E7AFFDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AB80A2D-B5A8-4FF2-8C1A-5A489E7AFFDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6554588B-ACE6-40AF-95C8-51F3AC55EABB}
+	EndGlobalSection
+EndGlobal
