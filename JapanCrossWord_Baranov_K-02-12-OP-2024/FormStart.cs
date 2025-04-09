@@ -54,6 +54,3 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         }
     }
 }
-//hey
-//evrey
-//
