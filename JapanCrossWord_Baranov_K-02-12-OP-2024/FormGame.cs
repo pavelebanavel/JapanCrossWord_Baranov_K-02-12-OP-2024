@@ -5,6 +5,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace JapanCrossWord_Baranov_K_02_12_OP_2024
@@ -33,12 +34,25 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         }
         private void change_game() //задаём параметры
         {
+            string pgame = "";
             if (cmbgame.Text == "Editor") Editor(); //редактор уровня
             else
             {
                 //подгружаем параметры для игры
+                if (cmbgame.Text=="Import")
+                {
+                    OpenFileDialog openFileDialog = new OpenFileDialog(); // диалог
+                    openFileDialog.Filter = "Level files (*.lvl)|*.lvl|All files (*.*)|*.*";
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string filepath = openFileDialog.FileName;
+                        FileStream lvl = new FileStream(filepath, FileMode.Open, FileAccess.Read);
+                        StreamReader lvlf = new StreamReader(lvl);
+                        pgame = lvlf.ReadToEnd();
+                    }
+                }
+                else  pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
                 this.Text=cmbgame.Text;
-                string pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
                 string[] game = pgame.Split('\n');
                 string[] gz = game[0].Split('x');
                 grdb = new char[int.Parse(gz[0]), int.Parse(gz[1])];
