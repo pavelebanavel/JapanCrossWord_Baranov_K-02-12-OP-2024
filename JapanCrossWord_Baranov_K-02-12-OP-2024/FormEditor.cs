@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -51,8 +52,8 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void change_game() //задаём параметры
         {
+            lblgame.Text = txtname.Text;
 
-            cmbgame.Text = txtname.Text;
             if (grdb != null)
             {
                 if (grdb.GetLength(0) != (int)numx.Value) gog = "";
@@ -60,22 +61,24 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             }
             if (sz != numb.Value) sz = (int)numb.Value;
             if (grdb == null) grdb = new char[(int)numx.Value, (int)numy.Value];
-            else
-            {
-                char[,] grdc = new char[(int)numx.Value, (int)numy.Value];
-
-                // Копируем данные из исходного массива в новый
-                for (int i = 0; i < Math.Min(grdb.GetLength(0), grdc.GetLength(0)); i++)
-                {
-                    for (int j = 0; j < Math.Min(grdb.GetLength(1), grdc.GetLength(1)); j++)
-                    {
-                        grdc[i, j] = grdb[i, j];
-                    }
-                }
-                grdb = grdc;
-            }
-
+            else grdb=transform(grdb);
         }
+
+        private char[,] transform(char[,] matrix)
+        {
+            char[,] grdc = new char[(int)numx.Value, (int)numy.Value];
+
+            // Копируем данные из исходного массива в новый
+            for (int i = 0; i < Math.Min(matrix.GetLength(0), grdc.GetLength(0)); i++)
+            {
+                for (int j = 0; j < Math.Min(matrix.GetLength(1), grdc.GetLength(1)); j++)
+                {
+                    grdc[i, j] = matrix[i, j];
+                }
+            }
+            return grdc;
+        }
+
         public void grid() //создаем игровую сетку
         {
             for (int x = 0; x < grdb.GetLength(0); x++)
@@ -83,6 +86,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 for (int y = 0; y < grdb.GetLength(1); y++)
                 {
                     Button btn = new Button();
+
                     if (grdb != null && grdb[x, y] == '1') btn.BackColor = Color.Black;
                     else btn.BackColor = Color.White;
                     if (grdb.GetLength(0) != numx.Value || grdb.GetLength(1) != numy.Value) grdb[x, y] = '0';
@@ -111,7 +115,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             int y;
             foreach (Button btnc in pnlpole.Controls)
             {
-                if (btnc.BackColor != Color.Black) // чтобы не закрасить рисунок пользователя
+                if (btnc.BackColor != Color.Black && btnc.BackColor != Color.Red) // чтобы не закрасить рисунок пользователя
                 {
                     //присваивания
                     x = ((Point)btnc.Tag).X;
@@ -122,7 +126,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 }
             }
         }
-
         private void Button_MouseDown(object sender, MouseEventArgs e) //обрабатываем взаимодействие с сеткой кнопок
         {
             Button sbtn = (Button)sender; //нажатая кнопка
@@ -224,7 +227,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         }
                     }
                 }
-
             }
 
             for (int y = 0; y < 3; y++)
@@ -290,43 +292,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
-            level_save();
             clear();
             change_game();
             grid();
             gorizontal();
             vertical();
-
-
         }
-        private void level_save()
-        {
-            string notv = "";
-            for (int y = 0; y < grdb.GetLength(1); y++)
-            {
-                for (int x = 0; x < grdb.GetLength(0); x++)
-                {
-                    notv += grdb[x, y];
-                }
-            }
-            if (notv.Contains("1"))
-            {
-                if (gov != "")
-                {
-                    if (gog != "")
-                    {
-                        Console.WriteLine(notv);
-                        level = $"{numx.Value}x{numy.Value}\n";
-                        level += $"{numb.Value}\n";
-                        level += $"{gog}\n{gov}\n";
-                        level += $"{notv}";
-                    }
-                    else MessageBox.Show("Горизонаталь не заполненна", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else MessageBox.Show("Вертикаль не заполненна", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else MessageBox.Show("Поле пусто", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
+        
         private void clear() //очистка
         {
             pnlpole.Controls.Clear();
@@ -372,7 +344,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
                         SaveFileDialog saveFileDialog = new SaveFileDialog();
                         saveFileDialog.Filter = "Level files (*.lvl)|*.lvl|All files (*.*)|*.*";
-                        saveFileDialog.FileName = $"{cmbgame.Text}.lvl";
+                        saveFileDialog.FileName = $"{lblgame.Text}.lvl";
                         if (saveFileDialog.ShowDialog() == DialogResult.OK)
                         {
                             string filepath = saveFileDialog.FileName;

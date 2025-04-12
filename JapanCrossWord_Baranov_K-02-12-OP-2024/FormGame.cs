@@ -18,10 +18,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         string gov = ""; // значение горизонтали
         string gog = ""; // значение вертикали
         int sec = 0, min = 0; //таймер
-
-        public FormGame()
+        bool isGameLoaded = false;
+        public FormGame(string gametext,int gameSI)
         {
             InitializeComponent();
+            cmbgame.Text = gametext;
+            cmbgame.SelectedIndex = gameSI;
         }
 
 
@@ -41,6 +43,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         {
             Console.WriteLine("change game!");
             string pgame = "";
+
             if (cmbgame.Text == "Editor")
             {
                 //открываем форму для редактирования уровней
@@ -48,14 +51,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 this.Hide();
                 frme.ShowDialog();
                 frme.Dispose();
-
             }
             else
             {
                 //подгружаем параметры для игры
                 if (cmbgame.Text == "Import")
                 {
-                    
                     OpenFileDialog openFileDialog = new OpenFileDialog(); // диалог
                     openFileDialog.Filter = "Level files (*.lvl)|*.lvl|All files (*.*)|*.*";
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -74,12 +75,9 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         this.Hide();
                         frms.ShowDialog();
                         frms.Dispose();
-                        this.Dispose();
                     }
                 }
                 else pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
-
-                if (pgame == "") pgame = (string)Properties.Resources.Game1;
 
                     this.Text = cmbgame.Text;
                     string[] game = pgame.Split('\n');
@@ -90,10 +88,11 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     gog = game[3];
                     grdo = game[4];
             }
+            isGameLoaded = true;
         }
         public void grid() //создаем игровую сетку
         {
-                for (int x = 0; x < grdb.GetLength(0); x++)
+            for (int x = 0; x < grdb.GetLength(0); x++)
                 {
                     for (int y = 0; y < grdb.GetLength(1); y++)
                     {
@@ -113,7 +112,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         btn.MouseDown += Button_MouseDown;
                         btn.MouseEnter += Button_MouseEnter;
                     }
-                }
+            }
         }
 
         private void vertical() //вертикаль
@@ -249,7 +248,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 sbtn.BackColor = Color.White;
                 grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
             }
-            string otv = grdo;
+            string otv = grdo.Trim();
             string notv = "";
 
             for (int y = 0; y < grdb.GetLength(1); y++)
@@ -259,7 +258,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     notv+= grdb[x, y];
                 }
             }
-            Console.WriteLine(notv);
             if (otv == notv) win(); // запускаем победный void
         }
 
@@ -354,12 +352,16 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void cmbgame_SelectedIndexChanged(object sender, EventArgs e) //выбор уровня
         {
-            clear(); //очистка
-            //запускаем войды
-            change_game(); //выбор уровня
-            grid(); //сетка
-            gorizontal(); //горизонталь
-            vertical(); //вертикаль
+            if (isGameLoaded)
+            {
+                clear(); //очистка
+
+                //запускаем войды
+                change_game(); //выбор уровня
+                grid(); //сетка
+                gorizontal(); //горизонталь
+                vertical(); //вертикаль
+            }
         }
         private void clear() //очистка текущего уровня
         {
@@ -397,8 +399,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         {
             MessageBox.Show("Вы победили");
             del(null,null);
-
-
         }
     }
 }
