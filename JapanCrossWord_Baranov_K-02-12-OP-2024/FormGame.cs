@@ -24,23 +24,38 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             InitializeComponent();
         }
 
+
         public void FormGame_Load(object sender, EventArgs e)
         {
             //запускаем войды
+            Console.WriteLine("load game1!");
             change_game(); //выбор уровня
+            Console.WriteLine("load game2!");
             grid(); //сетка
+            Console.WriteLine("load game3!");
             gorizontal(); //горизонталь
+            Console.WriteLine("load game4!");
             vertical(); //вертикаль
         }
         private void change_game() //задаём параметры
         {
+            Console.WriteLine("change game!");
             string pgame = "";
-            if (cmbgame.Text == "Editor") Editor(); //редактор уровня
+            if (cmbgame.Text == "Editor")
+            {
+                //открываем форму для редактирования уровней
+                FormEditor frme = new FormEditor();
+                this.Hide();
+                frme.ShowDialog();
+                frme.Dispose();
+
+            }
             else
             {
                 //подгружаем параметры для игры
-                if (cmbgame.Text=="Import")
+                if (cmbgame.Text == "Import")
                 {
+                    
                     OpenFileDialog openFileDialog = new OpenFileDialog(); // диалог
                     openFileDialog.Filter = "Level files (*.lvl)|*.lvl|All files (*.*)|*.*";
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -49,43 +64,58 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         FileStream lvl = new FileStream(filepath, FileMode.Open, FileAccess.Read);
                         StreamReader lvlf = new StreamReader(lvl);
                         pgame = lvlf.ReadToEnd();
+                        lvlf.Close();
+                        lvlf.Dispose();
+                        lvl.Dispose();
+                    }
+                    else
+                    {
+                        FormStart frms = new FormStart();
+                        this.Hide();
+                        frms.ShowDialog();
+                        frms.Dispose();
+                        this.Dispose();
                     }
                 }
-                else  pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
-                this.Text=cmbgame.Text;
-                string[] game = pgame.Split('\n');
-                string[] gz = game[0].Split('x');
-                grdb = new char[int.Parse(gz[0]), int.Parse(gz[1])];
-                sz = int.Parse(game[1]);
-                gov = game[2]; 
-                gog = game[3];
-                grdo = game[4];
+                else pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
+
+                if (pgame == "") pgame = (string)Properties.Resources.Game1;
+
+                    this.Text = cmbgame.Text;
+                    string[] game = pgame.Split('\n');
+                    string[] gz = game[0].Split('x');
+                    grdb = new char[int.Parse(gz[0]), int.Parse(gz[1])];
+                    sz = int.Parse(game[1]);
+                    gov = game[2];
+                    gog = game[3];
+                    grdo = game[4];
             }
         }
         public void grid() //создаем игровую сетку
         {
-            for (int x = 0; x < grdb.GetLength(0); x++)
-            {
-                for (int y = 0; y < grdb.GetLength(1); y++)
+                for (int x = 0; x < grdb.GetLength(0); x++)
                 {
-                    grdb[x, y] = '0';
-                    Button btn = new Button();
+                    for (int y = 0; y < grdb.GetLength(1); y++)
+                    {
+                        grdb[x, y] = '0';
+                        Button btn = new Button();
 
-                    //настройка стиля
-                    btn.Width = sz; btn.Height = sz;
-                    btn.Location = new Point(x * sz, y * sz);
-                    btn.FlatStyle = FlatStyle.Flat;
-                    btn.ForeColor = Color.Black;
+                        //настройка стиля
+                        btn.Width = sz; btn.Height = sz;
+                        btn.Location = new Point(x * sz, y * sz);
+                        btn.FlatStyle = FlatStyle.Flat;
+                        btn.ForeColor = Color.Black;
 
-                    btn.Tag = new Point(x, y); //записываем координаты в Tag
-                    pnlpole.Controls.Add(btn); //добаляем на форму
+                        btn.Tag = new Point(x, y); //записываем координаты в Tag
+                        pnlpole.Controls.Add(btn); //добаляем на форму
 
-                    //подписываем на события
-                    btn.MouseDown += Button_MouseDown;
-                    btn.MouseEnter += Button_MouseEnter;
+                        //подписываем на события
+                        btn.MouseDown += Button_MouseDown;
+                        btn.MouseEnter += Button_MouseEnter;
+                    }
                 }
-            }
         }
+
         private void vertical() //вертикаль
         {
             string gv = ""; //переменная отвечает за заполнение вертикали
@@ -238,6 +268,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             FormStart frms = new FormStart();
             this.Hide();
             frms.ShowDialog();
+            frms.Dispose();
         }
 
         private void exit_MouseEnter(object sender, EventArgs e)
@@ -323,7 +354,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void cmbgame_SelectedIndexChanged(object sender, EventArgs e) //выбор уровня
         {
-                clear(); //очистка
+            clear(); //очистка
             //запускаем войды
             change_game(); //выбор уровня
             grid(); //сетка
@@ -356,16 +387,11 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 lblt.Text += "+";
             }
         }
-        private void Editor() //редактор уровня
-        {
-            //открываем форму для редактирования уровней
-            FormEditor frme = new FormEditor();
-            this.Hide();
-            frme.ShowDialog();
-        }
 
         private void FormGame_FormClosing(object sender, FormClosingEventArgs e)
-        { Application.Exit(); } // закрываем игру
+        {
+            Application.Exit(); 
+        } // закрываем игру
 
         private void win() //действия при победе
         {

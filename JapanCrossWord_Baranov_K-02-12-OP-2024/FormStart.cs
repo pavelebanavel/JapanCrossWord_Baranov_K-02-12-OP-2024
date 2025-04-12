@@ -13,6 +13,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 {
     public partial class FormStart: Form
     {
+        FormGame frm = new FormGame();
         public FormStart()
         {
             InitializeComponent();
@@ -20,29 +21,32 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void FormStart_Load(object sender, EventArgs e)
         {
-            FormGame frm = new FormGame();
+
             foreach (string s in frm.cmbgame.Items) cmbgame.Items.Add(s);
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (cmbgame.Text != "Editor")
+            if (!frm.IsDisposed)
             {
-                FormGame frm = new FormGame();
-                this.Hide();
- frm.cmbgame.Text=cmbgame.Text;
-                frm.ShowDialog();
-                frm.Dispose();
-               
-            }
-            else
-            {
-                FormEditor frme = new FormEditor();
-                this.Hide();
-                frme.ShowDialog();
-                frme.Dispose();
+                if (cmbgame.Text != "Editor")
+                {
+                    this.Hide();
+                    frm.cmbgame.Text = cmbgame.Text;
+                    frm.ShowDialog();
+                    frm.Dispose();
+
+                }
+                else
+                {
+                    FormEditor frme = new FormEditor();
+                    this.Hide();
+                    frme.ShowDialog();
+                    frme.Dispose();
+                }
             }
         }
+
 
         private void FormStart_FormClosing(object sender, FormClosingEventArgs e)
         {Application.Exit();}
@@ -50,6 +54,10 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void cmbgame_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbgame.Text == "Editor") btnStart.Text = "New";
+            else btnStart.Text = "Start Game";
+
+            if (cmbgame.Text == "Import") btnStart.Text = "Import Game";
+            else if (cmbgame.Text == "Editor") btnStart.Text = "New";
             else btnStart.Text = "Start Game";
         }
     }
