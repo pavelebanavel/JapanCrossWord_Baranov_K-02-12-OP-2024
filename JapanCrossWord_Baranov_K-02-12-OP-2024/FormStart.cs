@@ -28,7 +28,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 frme.Dispose();
             }
         }
-
+         
         private void FormStart_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();

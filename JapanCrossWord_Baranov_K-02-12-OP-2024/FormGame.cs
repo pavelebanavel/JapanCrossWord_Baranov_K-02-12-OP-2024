@@ -143,7 +143,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     {
                         lbl.Text = $"{gv[index]}{gv[index + 1]}";
 
-                        if (lbl.Text[1] == '0')
+                        if (lbl.Text == "00") 
                             {
                                 lbl.Text = "";
                                 lbl.BackColor = Color.White;
@@ -185,7 +185,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     {
                         lbl.Text = $"{gg[index]}{gg[index + 1]}";
 
-                        if (lbl.Text[1] == '0')
+                        if (lbl.Text == "00")
                         {
                             lbl.Text = "";
                             lbl.BackColor = Color.White;

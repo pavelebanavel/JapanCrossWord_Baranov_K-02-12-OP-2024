@@ -89,7 +89,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
                     if (grdb != null && grdb[x, y] == '1') btn.BackColor = Color.Black;
                     else btn.BackColor = Color.White;
-                    if (grdb.GetLength(0) != numx.Value || grdb.GetLength(1) != numy.Value) grdb[x, y] = '0';
+                    if (grdb[x, y] == '\0') grdb[x, y] = '0';
 
                     //настройка стиля
                     btn.Width = sz; btn.Height = sz;
@@ -141,7 +141,45 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
             }
         }
+        private void gorizontal() //горизонталь
+        {
+            int index = 0;
+            for (int y = 0; y < 3; y++)
+            {
+                for (int x = 0; x < grdb.GetLength(0); x++)
+                {
+                    // настройка стиля
+                    Label lbl = new Label();
+                    if (gog == "") lbl.BackColor = Color.White;
+                    lbl.Width = sz; lbl.Height = sz;
+                    lbl.FlatStyle = FlatStyle.Flat;
+                    lbl.BorderStyle = BorderStyle.FixedSingle;
+                    lbl.TextAlign = ContentAlignment.MiddleCenter;
+                    lbl.Font = new Font("Microsoft Sans Serif", sz / 3);
 
+                    lbl.Tag = new Point(x, y); //записываем координаты в Tag
+
+                    // настройка положения
+                    lbl.Location = new Point(x * sz, y * sz);
+
+                    if (gog != "" && index + 1 < gog.Length)
+                    {
+                        lbl.Text = $"{gog[index]}{gog[index + 1]}";
+
+                        if (lbl.Text == "00")
+                        {
+                            lbl.Text = "";
+                            lbl.BackColor = Color.White;
+                        }
+                        if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
+                        index += 2;//потому что данные хранятся по 2 символа
+                    }
+
+                    pnlg.Controls.Add(lbl); //добавляем горизонталь на панель
+                    lbl.MouseDown += lbl_Click;
+                }
+            }
+        }
         private void vertical() //вертикаль
         {
             int index = 0;
@@ -166,7 +204,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     {
                         lbl.Text = $"{gov[index]}{gov[index + 1]}";
 
-                        if (lbl.Text[1] == '0')
+                        if (lbl.Text == "00")
                         {
                             lbl.Text = "";
                             lbl.BackColor = Color.White;
@@ -188,12 +226,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             if (lbl.Text != "") vl = int.Parse(lbl.Text);
             if (lbl.Parent.Name == "pnlv")
             {
-                if (vl >= grdb.GetLength(1)) vl = 0;
+                if (vl >= grdb.GetLength(0)) vl = 0;
                 else vl++;
             }
             else
             {
-                if (vl >= grdb.GetLength(0)) vl = 0;
+                if (vl >= grdb.GetLength(1)) vl = 0; 
                 else vl++;
             }
             if (vl != 0)
@@ -250,45 +288,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 }
             }
         }
-        private void gorizontal() //горизонталь
-        {
-            int index = 0;
-            for (int y = 0; y < 3; y++)
-            {
-                for (int x = 0; x < grdb.GetLength(0); x++)
-                {
-                    // настройка стиля
-                    Label lbl = new Label();
-                    if (gog == "") lbl.BackColor = Color.White;
-                    lbl.Width = sz; lbl.Height = sz;
-                    lbl.FlatStyle = FlatStyle.Flat;
-                    lbl.BorderStyle = BorderStyle.FixedSingle;
-                    lbl.TextAlign = ContentAlignment.MiddleCenter;
-                    lbl.Font = new Font("Microsoft Sans Serif", sz / 3);
-
-                    lbl.Tag = new Point(x, y); //записываем координаты в Tag
-
-                    // настройка положения
-                    lbl.Location = new Point(x * sz, y * sz);
-
-                    if (gog != "" && index + 1 < gog.Length)
-                    {
-                        lbl.Text = $"{gog[index]}{gog[index + 1]}";
-
-                        if (lbl.Text[1] == '0')
-                        {
-                            lbl.Text = "";
-                            lbl.BackColor = Color.White;
-                        }
-                        if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
-                        index += 2;//потому что данные хранятся по 2 символа
-                    }
-
-                    pnlg.Controls.Add(lbl); //добавляем горизонталь на панель
-                    lbl.MouseDown += lbl_Click;
-                }
-            }
-        }
+        
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
