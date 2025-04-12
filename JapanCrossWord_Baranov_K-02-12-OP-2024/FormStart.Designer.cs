@@ -54,6 +54,12 @@
             this.cmbgame.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbgame.ForeColor = System.Drawing.Color.Black;
             this.cmbgame.FormattingEnabled = true;
+            this.cmbgame.Items.AddRange(new object[] {
+            "Game1",
+            "Game2",
+            "Game3",
+            "Import",
+            "Editor"});
             this.cmbgame.Location = new System.Drawing.Point(12, 138);
             this.cmbgame.Name = "cmbgame";
             this.cmbgame.Size = new System.Drawing.Size(142, 33);
@@ -90,7 +96,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Japan CrossWord";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormStart_FormClosing);
-            this.Load += new System.EventHandler(this.FormStart_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

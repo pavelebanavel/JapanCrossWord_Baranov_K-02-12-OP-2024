@@ -44,7 +44,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             Console.WriteLine("change game!");
             string pgame = "";
 
-            if (cmbgame.Text == "Editor")
+            if (cmbgame.SelectedIndex == 4)
             {
                 //открываем форму для редактирования уровней
                 FormEditor frme = new FormEditor();
@@ -55,7 +55,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             else
             {
                 //подгружаем параметры для игры
-                if (cmbgame.Text == "Import")
+                if (cmbgame.SelectedIndex == 3)
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog(); // диалог
                     openFileDialog.Filter = "Level files (*.lvl)|*.lvl|All files (*.*)|*.*";
@@ -65,6 +65,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         FileStream lvl = new FileStream(filepath, FileMode.Open, FileAccess.Read);
                         StreamReader lvlf = new StreamReader(lvl);
                         pgame = lvlf.ReadToEnd();
+                        cmbgame.Text = Path.GetFileName(filepath);
                         lvlf.Close();
                         lvlf.Dispose();
                         lvl.Dispose();
@@ -75,10 +76,9 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         this.Hide();
                         frms.ShowDialog();
                         frms.Dispose();
-                    }
+                    } 
                 }
                 else pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
-
                     this.Text = cmbgame.Text;
                     string[] game = pgame.Split('\n');
                     string[] gz = game[0].Split('x');

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cmbgame = new System.Windows.Forms.ComboBox();
             this.pnlv = new System.Windows.Forms.Panel();
             this.pnlg = new System.Windows.Forms.Panel();
             this.pnlpole = new System.Windows.Forms.Panel();
@@ -46,25 +45,11 @@
             this.txtname = new System.Windows.Forms.TextBox();
             this.lbln = new System.Windows.Forms.Label();
             this.btnsave = new System.Windows.Forms.Button();
+            this.lblgame = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numx)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numy)).BeginInit();
             this.SuspendLayout();
-            // 
-            // cmbgame
-            // 
-            this.cmbgame.BackColor = System.Drawing.Color.White;
-            this.cmbgame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbgame.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cmbgame.ForeColor = System.Drawing.Color.Black;
-            this.cmbgame.FormattingEnabled = true;
-            this.cmbgame.Items.AddRange(new object[] {
-            "..."});
-            this.cmbgame.Location = new System.Drawing.Point(12, 18);
-            this.cmbgame.Name = "cmbgame";
-            this.cmbgame.Size = new System.Drawing.Size(128, 39);
-            this.cmbgame.TabIndex = 18;
-            this.cmbgame.Text = "New1";
             // 
             // pnlv
             // 
@@ -298,12 +283,24 @@
             this.btnsave.UseVisualStyleBackColor = true;
             this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
             // 
+            // lblgame
+            // 
+            this.lblgame.AutoSize = true;
+            this.lblgame.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblgame.ForeColor = System.Drawing.Color.Black;
+            this.lblgame.Location = new System.Drawing.Point(32, 18);
+            this.lblgame.Name = "lblgame";
+            this.lblgame.Size = new System.Drawing.Size(86, 37);
+            this.lblgame.TabIndex = 29;
+            this.lblgame.Text = "New1";
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(807, 493);
+            this.Controls.Add(this.lblgame);
             this.Controls.Add(this.btnsave);
             this.Controls.Add(this.lbln);
             this.Controls.Add(this.txtname);
@@ -313,7 +310,6 @@
             this.Controls.Add(this.lblb);
             this.Controls.Add(this.numb);
             this.Controls.Add(this.lbls);
-            this.Controls.Add(this.cmbgame);
             this.Controls.Add(this.numx);
             this.Controls.Add(this.pnlv);
             this.Controls.Add(this.pnlg);
@@ -337,8 +333,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox cmbgame;
         private System.Windows.Forms.Panel pnlv;
         private System.Windows.Forms.Panel pnlg;
         private System.Windows.Forms.Panel pnlpole;
@@ -356,5 +350,6 @@
         private System.Windows.Forms.TextBox txtname;
         private System.Windows.Forms.Label lbln;
         private System.Windows.Forms.Button btnsave;
+        private System.Windows.Forms.Label lblgame;
     }
 }

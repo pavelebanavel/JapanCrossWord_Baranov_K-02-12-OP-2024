@@ -239,7 +239,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 lbl.Text = vl.ToString();
                 lbl.BackColor = Color.LightGray;
             }
-            else
+            else 
             {
                 lbl.Text = "";
                 lbl.BackColor = Color.White;
