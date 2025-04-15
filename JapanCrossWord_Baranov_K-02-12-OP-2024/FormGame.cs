@@ -76,7 +76,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         this.Hide();
                         frms.ShowDialog();
                         frms.Dispose();
-                    } 
+                    }  
                 }
                 else pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
                     this.Text = cmbgame.Text;

@@ -5,14 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+
 
 namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 {
@@ -23,6 +18,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         string gov = ""; // значение горизонтали
         string gog = ""; // значение вертикали
         string level = "";
+        Color cc = Color.White;
 
         public FormEditor()
         {
@@ -53,6 +49,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void change_game() //задаём параметры
         {
             lblgame.Text = txtname.Text;
+            cc = piccolor.BackColor;
 
             if (grdb != null)
             {
@@ -96,6 +93,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     btn.Location = new Point(x * sz, y * sz);
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.ForeColor = Color.Black;
+                    if (btn.BackColor != Color.Black)btn.BackColor = cc;
 
                     btn.Tag = new Point(x, y); //записываем координаты в Tag
                     pnlpole.Controls.Add(btn); //добаляем на форму
@@ -120,7 +118,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     //присваивания
                     x = ((Point)btnc.Tag).X;
                     y = ((Point)btnc.Tag).Y;
-                    btnc.BackColor = Color.White;
+                    btnc.BackColor = cc;
 
                     if (pos.X == x || pos.Y == y) btnc.BackColor = Color.LightGray; //рисуем крестик
                 }
@@ -149,7 +147,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 for (int x = 0; x < grdb.GetLength(0); x++)
                 {
                     // настройка стиля
-                    Label lbl = new Label();
+                    Label lbl = new Label(); 
                     if (gog == "") lbl.BackColor = Color.White;
                     lbl.Width = sz; lbl.Height = sz;
                     lbl.FlatStyle = FlatStyle.Flat;
@@ -179,6 +177,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     lbl.MouseDown += lbl_Click;
                 }
             }
+            
         }
         private void vertical() //вертикаль
         {
@@ -237,7 +236,8 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             if (vl != 0)
             {
                 lbl.Text = vl.ToString();
-                lbl.BackColor = Color.LightGray;
+                if (cc == Color.White) lbl.BackColor = Color.LightGray;
+                else lbl.BackColor = cc;
             }
             else 
             {
@@ -309,8 +309,22 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void delete_Click(object sender, EventArgs e)
         {
             foreach (Button btn in pnlpole.Controls) btn.BackColor = Color.White; // перекрашиваем
+            foreach (Label lbl in pnlv.Controls)
+            {
+                lbl.BackColor = Color.White; // перекрашиваем
+                lbl.Text = "";
+            }
+
+            foreach (Label lbl in pnlg.Controls)
+            {
+                lbl.BackColor = Color.White; // перекрашиваем
+                lbl.Text = "";
+            }
 
             //очищаем
+            gov = "";
+            gog = "";
+
             for (int y = 0; y < grdb.GetLength(1); y++)
             {
                 for (int x = 0; x < grdb.GetLength(0); x++)
@@ -364,5 +378,9 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             else MessageBox.Show("Поле пусто", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
+        private void piccolor_Click(object sender, EventArgs e)
+        {
+            if (CD.ShowDialog() == DialogResult.OK) piccolor.BackColor=CD.Color;
+        }
     }
 }

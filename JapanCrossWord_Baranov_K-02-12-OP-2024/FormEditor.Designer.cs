@@ -32,8 +32,6 @@
             this.pnlg = new System.Windows.Forms.Panel();
             this.pnlpole = new System.Windows.Forms.Panel();
             this.delete = new System.Windows.Forms.Button();
-            this.otvet = new System.Windows.Forms.Button();
-            this.pnew = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.Button();
             this.numx = new System.Windows.Forms.NumericUpDown();
             this.lbls = new System.Windows.Forms.Label();
@@ -46,9 +44,14 @@
             this.lbln = new System.Windows.Forms.Label();
             this.btnsave = new System.Windows.Forms.Button();
             this.lblgame = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.piccolor = new System.Windows.Forms.PictureBox();
+            this.lblcolor = new System.Windows.Forms.Label();
+            this.CD = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numx)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.piccolor)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlv
@@ -79,50 +82,29 @@
             // 
             // delete
             // 
-            this.delete.BackgroundImage = global::JapanCrossWord_Baranov_K_02_12_OP_2024.Properties.Resources.delete;
             this.delete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 5.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.delete.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.delete.Location = new System.Drawing.Point(114, 75);
+            this.delete.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.delete.ForeColor = System.Drawing.Color.Black;
+            this.delete.Location = new System.Drawing.Point(673, 403);
             this.delete.Name = "delete";
-            this.delete.Size = new System.Drawing.Size(30, 30);
+            this.delete.Size = new System.Drawing.Size(122, 36);
             this.delete.TabIndex = 14;
+            this.delete.Text = "Clear";
             this.delete.UseVisualStyleBackColor = true;
             this.delete.Click += new System.EventHandler(this.delete_Click);
             // 
-            // otvet
-            // 
-            this.otvet.BackgroundImage = global::JapanCrossWord_Baranov_K_02_12_OP_2024.Properties.Resources.otvet;
-            this.otvet.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.otvet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.otvet.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.otvet.Location = new System.Drawing.Point(79, 75);
-            this.otvet.Name = "otvet";
-            this.otvet.Size = new System.Drawing.Size(30, 30);
-            this.otvet.TabIndex = 13;
-            this.otvet.UseVisualStyleBackColor = true;
-            // 
-            // pnew
-            // 
-            this.pnew.BackgroundImage = global::JapanCrossWord_Baranov_K_02_12_OP_2024.Properties.Resources.plus;
-            this.pnew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pnew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.pnew.Location = new System.Drawing.Point(44, 75);
-            this.pnew.Name = "pnew";
-            this.pnew.Size = new System.Drawing.Size(30, 30);
-            this.pnew.TabIndex = 12;
-            this.pnew.UseVisualStyleBackColor = true;
-            // 
             // exit
             // 
-            this.exit.BackgroundImage = global::JapanCrossWord_Baranov_K_02_12_OP_2024.Properties.Resources.exit;
             this.exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exit.Location = new System.Drawing.Point(9, 75);
+            this.exit.Font = new System.Drawing.Font("Segoe UI", 14.25F);
+            this.exit.ForeColor = System.Drawing.Color.Black;
+            this.exit.Location = new System.Drawing.Point(545, 403);
             this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(30, 30);
+            this.exit.Size = new System.Drawing.Size(122, 36);
             this.exit.TabIndex = 11;
+            this.exit.Text = "Menu";
             this.exit.UseVisualStyleBackColor = true;
             this.exit.Click += new System.EventHandler(this.exit_Click);
             // 
@@ -131,7 +113,7 @@
             this.numx.BackColor = System.Drawing.Color.White;
             this.numx.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numx.ForeColor = System.Drawing.Color.Black;
-            this.numx.Location = new System.Drawing.Point(545, 38);
+            this.numx.Location = new System.Drawing.Point(545, 37);
             this.numx.Maximum = new decimal(new int[] {
             20,
             0,
@@ -143,7 +125,7 @@
             0,
             0});
             this.numx.Name = "numx";
-            this.numx.Size = new System.Drawing.Size(53, 33);
+            this.numx.Size = new System.Drawing.Size(47, 33);
             this.numx.TabIndex = 19;
             this.numx.Value = new decimal(new int[] {
             10,
@@ -156,7 +138,7 @@
             this.lbls.AutoSize = true;
             this.lbls.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbls.ForeColor = System.Drawing.Color.Black;
-            this.lbls.Location = new System.Drawing.Point(694, 38);
+            this.lbls.Location = new System.Drawing.Point(680, 37);
             this.lbls.Name = "lbls";
             this.lbls.Size = new System.Drawing.Size(101, 32);
             this.lbls.TabIndex = 20;
@@ -167,7 +149,7 @@
             this.lblb.AutoSize = true;
             this.lblb.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblb.ForeColor = System.Drawing.Color.Black;
-            this.lblb.Location = new System.Drawing.Point(694, 125);
+            this.lblb.Location = new System.Drawing.Point(680, 125);
             this.lblb.Name = "lblb";
             this.lblb.Size = new System.Drawing.Size(97, 32);
             this.lblb.TabIndex = 22;
@@ -190,7 +172,7 @@
             0,
             0});
             this.numb.Name = "numb";
-            this.numb.Size = new System.Drawing.Size(143, 33);
+            this.numb.Size = new System.Drawing.Size(129, 33);
             this.numb.TabIndex = 21;
             this.numb.Value = new decimal(new int[] {
             35,
@@ -203,7 +185,7 @@
             this.numy.BackColor = System.Drawing.Color.White;
             this.numy.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numy.ForeColor = System.Drawing.Color.Black;
-            this.numy.Location = new System.Drawing.Point(635, 38);
+            this.numy.Location = new System.Drawing.Point(627, 37);
             this.numy.Maximum = new decimal(new int[] {
             20,
             0,
@@ -215,7 +197,7 @@
             0,
             0});
             this.numy.Name = "numy";
-            this.numy.Size = new System.Drawing.Size(53, 33);
+            this.numy.Size = new System.Drawing.Size(47, 33);
             this.numy.TabIndex = 23;
             this.numy.Value = new decimal(new int[] {
             10,
@@ -228,7 +210,7 @@
             this.lblx.AutoSize = true;
             this.lblx.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblx.ForeColor = System.Drawing.Color.Black;
-            this.lblx.Location = new System.Drawing.Point(604, 39);
+            this.lblx.Location = new System.Drawing.Point(597, 37);
             this.lblx.Name = "lblx";
             this.lblx.Size = new System.Drawing.Size(25, 32);
             this.lblx.TabIndex = 24;
@@ -255,7 +237,7 @@
             this.txtname.ForeColor = System.Drawing.Color.Black;
             this.txtname.Location = new System.Drawing.Point(545, 212);
             this.txtname.Name = "txtname";
-            this.txtname.Size = new System.Drawing.Size(143, 33);
+            this.txtname.Size = new System.Drawing.Size(129, 33);
             this.txtname.TabIndex = 26;
             this.txtname.Text = "New1";
             // 
@@ -264,7 +246,7 @@
             this.lbln.AutoSize = true;
             this.lbln.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbln.ForeColor = System.Drawing.Color.Black;
-            this.lbln.Location = new System.Drawing.Point(694, 212);
+            this.lbln.Location = new System.Drawing.Point(680, 212);
             this.lbln.Name = "lbln";
             this.lbln.Size = new System.Drawing.Size(78, 32);
             this.lbln.TabIndex = 27;
@@ -279,7 +261,7 @@
             this.btnsave.Name = "btnsave";
             this.btnsave.Size = new System.Drawing.Size(122, 35);
             this.btnsave.TabIndex = 28;
-            this.btnsave.Text = "Save";
+            this.btnsave.Text = "Export";
             this.btnsave.UseVisualStyleBackColor = true;
             this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
             // 
@@ -288,11 +270,43 @@
             this.lblgame.AutoSize = true;
             this.lblgame.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblgame.ForeColor = System.Drawing.Color.Black;
-            this.lblgame.Location = new System.Drawing.Point(32, 18);
+            this.lblgame.Location = new System.Drawing.Point(37, 46);
             this.lblgame.Name = "lblgame";
             this.lblgame.Size = new System.Drawing.Size(86, 37);
             this.lblgame.TabIndex = 29;
             this.lblgame.Text = "New1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(12, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(134, 21);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Crossword Name:";
+            // 
+            // piccolor
+            // 
+            this.piccolor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.piccolor.Location = new System.Drawing.Point(545, 299);
+            this.piccolor.Name = "piccolor";
+            this.piccolor.Size = new System.Drawing.Size(129, 33);
+            this.piccolor.TabIndex = 31;
+            this.piccolor.TabStop = false;
+            this.piccolor.Click += new System.EventHandler(this.piccolor_Click);
+            // 
+            // lblcolor
+            // 
+            this.lblcolor.AutoSize = true;
+            this.lblcolor.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblcolor.ForeColor = System.Drawing.Color.Black;
+            this.lblcolor.Location = new System.Drawing.Point(680, 299);
+            this.lblcolor.Name = "lblcolor";
+            this.lblcolor.Size = new System.Drawing.Size(111, 32);
+            this.lblcolor.TabIndex = 32;
+            this.lblcolor.Text = "CellColor";
             // 
             // FormEditor
             // 
@@ -300,6 +314,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(807, 493);
+            this.Controls.Add(this.lblcolor);
+            this.Controls.Add(this.piccolor);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.delete);
             this.Controls.Add(this.lblgame);
             this.Controls.Add(this.btnsave);
             this.Controls.Add(this.lbln);
@@ -314,9 +332,6 @@
             this.Controls.Add(this.pnlv);
             this.Controls.Add(this.pnlg);
             this.Controls.Add(this.pnlpole);
-            this.Controls.Add(this.delete);
-            this.Controls.Add(this.otvet);
-            this.Controls.Add(this.pnew);
             this.Controls.Add(this.exit);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "FormEditor";
@@ -327,6 +342,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numx)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.piccolor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -337,8 +353,6 @@
         private System.Windows.Forms.Panel pnlg;
         private System.Windows.Forms.Panel pnlpole;
         private System.Windows.Forms.Button delete;
-        private System.Windows.Forms.Button otvet;
-        private System.Windows.Forms.Button pnew;
         private System.Windows.Forms.Button exit;
         private System.Windows.Forms.NumericUpDown numx;
         private System.Windows.Forms.Label lbls;
@@ -351,5 +365,9 @@
         private System.Windows.Forms.Label lbln;
         private System.Windows.Forms.Button btnsave;
         private System.Windows.Forms.Label lblgame;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox piccolor;
+        private System.Windows.Forms.Label lblcolor;
+        private System.Windows.Forms.ColorDialog CD;
     }
 }
