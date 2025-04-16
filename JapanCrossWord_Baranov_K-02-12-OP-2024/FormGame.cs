@@ -1,9 +1,9 @@
 ﻿//Баранов Павел
 //Проект JapanCrossword
 //Группа K-02-12-OП-2024
-
+//github есть
+ 
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -18,6 +18,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         string gov = ""; // значение горизонтали
         string gog = ""; // значение вертикали
         int sec = 0, min = 0; //таймер
+        Color cc = Color.White;
         bool isGameLoaded = false;
         public FormGame(string gametext,int gameSI)
         {
@@ -30,18 +31,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         public void FormGame_Load(object sender, EventArgs e)
         {
             //запускаем войды
-            Console.WriteLine("load game1!");
             change_game(); //выбор уровня
-            Console.WriteLine("load game2!");
             grid(); //сетка
-            Console.WriteLine("load game3!");
             gorizontal(); //горизонталь
-            Console.WriteLine("load game4!");
             vertical(); //вертикаль
         }
         private void change_game() //задаём параметры
         {
-            Console.WriteLine("change game!");
             string pgame = "";
 
             if (cmbgame.SelectedIndex == 4)
@@ -79,14 +75,23 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     }  
                 }
                 else pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
-                    this.Text = cmbgame.Text;
-                    string[] game = pgame.Split('\n');
-                    string[] gz = game[0].Split('x');
-                    grdb = new char[int.Parse(gz[0]), int.Parse(gz[1])];
-                    sz = int.Parse(game[1]);
-                    gov = game[2];
-                    gog = game[3];
-                    grdo = game[4];
+
+                if(pgame == "" || pgame == null)
+                {
+                    isGameLoaded = false;
+                    return;
+                }
+
+                this.Text = cmbgame.Text;
+                string[] game = pgame.Split('\n');
+                string[] gz = game[0].Split('x');
+                grdb = new char[int.Parse(gz[0]), int.Parse(gz[1])];
+                sz = int.Parse(game[1]);
+                string[] sc = game[2].Split(',');
+                cc = Color.FromArgb(int.Parse(sc[0]), int.Parse(sc[1]), int.Parse(sc[2]), int.Parse(sc[3]));
+                gov = game[3];
+                gog = game[4];
+                grdo = game[5];
             }
             isGameLoaded = true;
         }
@@ -104,7 +109,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         btn.Location = new Point(x * sz, y * sz);
                         btn.FlatStyle = FlatStyle.Flat;
                         btn.ForeColor = Color.Black;
-
+                        btn.BackColor = cc;
                         btn.Tag = new Point(x, y); //записываем координаты в Tag
                         pnlpole.Controls.Add(btn); //добаляем на форму
 
@@ -146,7 +151,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         if (lbl.Text == "00") 
                             {
                                 lbl.Text = "";
-                                lbl.BackColor = Color.White;
+                                lbl.BackColor = cc;
                             }
                         if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
 
@@ -155,7 +160,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     pnlv.Controls.Add(lbl); //добавляем вертикаль на панель
                 }
             }
-        }
+        } 
 
         private void gorizontal() //горизонталь
         {
@@ -188,7 +193,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         if (lbl.Text == "00")
                         {
                             lbl.Text = "";
-                            lbl.BackColor = Color.White;
+                            lbl.BackColor = cc;
                         }
                         if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
                         index += 2;//потому что данные хранятся по 2 символа
@@ -210,8 +215,8 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     //присваивания
                     x = ((Point)btnc.Tag).X;
-                    y = ((Point)btnc.Tag).Y;
-                    btnc.BackColor = Color.White;
+                    y = ((Point)btnc.Tag).Y;    
+                    btnc.BackColor = cc;
                     
                     if (pos.X == x || pos.Y == y) btnc.BackColor = Color.LightGray; //рисуем крестик
                 }
@@ -232,7 +237,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 }
                 else
                 {
-                    sbtn.BackColor = Color.White;
+                    sbtn.BackColor = cc;
                     grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
                 }
 
@@ -245,7 +250,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             }
             else
             {
-                sbtn.BackColor = Color.White;
+                sbtn.BackColor = cc;
                 grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
             }
             string otv = grdo.Trim();
@@ -277,7 +282,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void exit_MouseLeave(object sender, EventArgs e)
         {
             exit.BackgroundImage = Properties.Resources.exit;
-            exit.BackColor = Color.White;
+            exit.BackColor = cc;
         }
 
         private void info_Click(object sender, EventArgs e)
@@ -337,7 +342,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             lblt.Text = "00:00";
             sec = 0;
             min = 0;
-            foreach (Button btn in pnlpole.Controls) btn.BackColor = Color.White; // перекрашиваем
+            foreach (Button btn in pnlpole.Controls) btn.BackColor = cc; // перекрашиваем
 
             //очищаем
             for (int y = 0; y < grdb.GetLength(1); y++)

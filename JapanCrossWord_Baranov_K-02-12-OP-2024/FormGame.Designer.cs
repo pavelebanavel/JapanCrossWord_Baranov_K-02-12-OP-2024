@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGame));
             this.lblt = new System.Windows.Forms.Label();
             this.time = new System.Windows.Forms.Timer(this.components);
             this.otvet = new System.Windows.Forms.Button();
@@ -39,7 +40,7 @@
             this.pnlg = new System.Windows.Forms.Panel();
             this.pnlv = new System.Windows.Forms.Panel();
             this.cmbgame = new System.Windows.Forms.ComboBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tt = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // lblt
@@ -71,6 +72,7 @@
             this.otvet.Name = "otvet";
             this.otvet.Size = new System.Drawing.Size(30, 30);
             this.otvet.TabIndex = 4;
+            this.tt.SetToolTip(this.otvet, "Правильный ответ");
             this.otvet.UseVisualStyleBackColor = true;
             this.otvet.Click += new System.EventHandler(this.otvet_Click);
             // 
@@ -85,6 +87,7 @@
             this.delete.Name = "delete";
             this.delete.Size = new System.Drawing.Size(30, 30);
             this.delete.TabIndex = 5;
+            this.tt.SetToolTip(this.delete, "Очистка поля!");
             this.delete.UseVisualStyleBackColor = true;
             this.delete.Click += new System.EventHandler(this.del);
             // 
@@ -97,7 +100,7 @@
             this.info.Name = "info";
             this.info.Size = new System.Drawing.Size(30, 30);
             this.info.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.info, "Правила игры");
+            this.tt.SetToolTip(this.info, "Правила игры");
             this.info.UseVisualStyleBackColor = true;
             this.info.Click += new System.EventHandler(this.info_Click);
             // 
@@ -110,6 +113,7 @@
             this.exit.Name = "exit";
             this.exit.Size = new System.Drawing.Size(30, 30);
             this.exit.TabIndex = 2;
+            this.tt.SetToolTip(this.exit, "Выход в меню");
             this.exit.UseVisualStyleBackColor = true;
             this.exit.Click += new System.EventHandler(this.exit_Click);
             this.exit.MouseEnter += new System.EventHandler(this.exit_MouseEnter);
@@ -176,6 +180,7 @@
             this.Controls.Add(this.exit);
             this.Controls.Add(this.lblt);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormGame";
             this.RightToLeftLayout = true;
@@ -199,7 +204,7 @@
         private System.Windows.Forms.Panel pnlg;
         private System.Windows.Forms.Panel pnlv;
         public System.Windows.Forms.ComboBox cmbgame;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip tt;
     }
 }
 

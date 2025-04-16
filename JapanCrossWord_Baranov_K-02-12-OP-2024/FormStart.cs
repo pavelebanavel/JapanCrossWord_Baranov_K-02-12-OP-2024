@@ -8,7 +8,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         public FormStart()
         {
             InitializeComponent();
-        }
+        }  
 
         private void btnStart_Click(object sender, EventArgs e)
         {

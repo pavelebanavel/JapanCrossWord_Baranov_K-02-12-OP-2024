@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditor));
             this.pnlv = new System.Windows.Forms.Panel();
             this.pnlg = new System.Windows.Forms.Panel();
             this.pnlpole = new System.Windows.Forms.Panel();
@@ -100,7 +101,7 @@
             this.exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exit.Font = new System.Drawing.Font("Segoe UI", 14.25F);
             this.exit.ForeColor = System.Drawing.Color.Black;
-            this.exit.Location = new System.Drawing.Point(545, 403);
+            this.exit.Location = new System.Drawing.Point(545, 444);
             this.exit.Name = "exit";
             this.exit.Size = new System.Drawing.Size(122, 36);
             this.exit.TabIndex = 11;
@@ -221,7 +222,7 @@
             this.btnapply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnapply.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnapply.ForeColor = System.Drawing.Color.Black;
-            this.btnapply.Location = new System.Drawing.Point(545, 445);
+            this.btnapply.Location = new System.Drawing.Point(545, 403);
             this.btnapply.Name = "btnapply";
             this.btnapply.Size = new System.Drawing.Size(122, 35);
             this.btnapply.TabIndex = 25;
@@ -334,6 +335,9 @@
             this.Controls.Add(this.pnlpole);
             this.Controls.Add(this.exit);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FormEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game editor";

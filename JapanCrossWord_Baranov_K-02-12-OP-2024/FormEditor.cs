@@ -85,7 +85,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     Button btn = new Button();
 
                     if (grdb != null && grdb[x, y] == '1') btn.BackColor = Color.Black;
-                    else btn.BackColor = Color.White;
+                    else btn.BackColor = cc;
                     if (grdb[x, y] == '\0') grdb[x, y] = '0';
 
                     //настройка стиля
@@ -113,7 +113,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             int y;
             foreach (Button btnc in pnlpole.Controls)
             {
-                if (btnc.BackColor != Color.Black && btnc.BackColor != Color.Red) // чтобы не закрасить рисунок пользователя
+                if (btnc.BackColor != Color.Black) // чтобы не закрасить рисунок пользователя
                 {
                     //присваивания
                     x = ((Point)btnc.Tag).X;
@@ -134,7 +134,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             }
             else
             {
-                sbtn.BackColor = Color.White;
+                sbtn.BackColor = cc;
                 grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
 
             }
@@ -148,7 +148,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     // настройка стиля
                     Label lbl = new Label(); 
-                    if (gog == "") lbl.BackColor = Color.White;
+                    if (gog == "") lbl.BackColor = cc;
                     lbl.Width = sz; lbl.Height = sz;
                     lbl.FlatStyle = FlatStyle.Flat;
                     lbl.BorderStyle = BorderStyle.FixedSingle;
@@ -167,7 +167,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         if (lbl.Text == "00")
                         {
                             lbl.Text = "";
-                            lbl.BackColor = Color.White;
+                            lbl.BackColor = cc;
                         }
                         if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
                         index += 2;//потому что данные хранятся по 2 символа
@@ -188,7 +188,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     // настройка стиля
                     Label lbl = new Label();
-                    if (gov == "") lbl.BackColor = Color.White;
+                    if (gov == "") lbl.BackColor = cc;
                     lbl.Width = sz; lbl.Height = sz;
                     lbl.FlatStyle = FlatStyle.Flat;
                     lbl.BorderStyle = BorderStyle.FixedSingle;
@@ -206,7 +206,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         if (lbl.Text == "00")
                         {
                             lbl.Text = "";
-                            lbl.BackColor = Color.White;
+                            lbl.BackColor = cc;
                         }
                         if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
                         index += 2;//потому что данные хранятся по 2 символа
@@ -236,13 +236,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             if (vl != 0)
             {
                 lbl.Text = vl.ToString();
-                if (cc == Color.White) lbl.BackColor = Color.LightGray;
-                else lbl.BackColor = cc;
+                lbl.BackColor = Color.LightGray;
             }
             else 
             {
                 lbl.Text = "";
-                lbl.BackColor = Color.White;
+                lbl.BackColor = cc;
             }
             gog = "";
             gov = "";
@@ -308,16 +307,16 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void delete_Click(object sender, EventArgs e)
         {
-            foreach (Button btn in pnlpole.Controls) btn.BackColor = Color.White; // перекрашиваем
+            foreach (Button btn in pnlpole.Controls) btn.BackColor = cc; // перекрашиваем
             foreach (Label lbl in pnlv.Controls)
             {
-                lbl.BackColor = Color.White; // перекрашиваем
+                lbl.BackColor = cc; // перекрашиваем
                 lbl.Text = "";
             }
 
             foreach (Label lbl in pnlg.Controls)
             {
-                lbl.BackColor = Color.White; // перекрашиваем
+                lbl.BackColor = cc; // перекрашиваем
                 lbl.Text = "";
             }
 
@@ -347,12 +346,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             if (notv.Contains("1"))
             {
                 if (gov != "")
-                {
+                { 
                     if (gog != "")
                     {
-                        Console.WriteLine(notv);
                         level = $"{numx.Value}x{numy.Value}\n";
                         level += $"{numb.Value}\n";
+                        level += $"{cc.A},{cc.R},{cc.G},{cc.B}\n";
                         level += $"{gov}\n{gog}\n";
                         level += $"{notv}";
 
