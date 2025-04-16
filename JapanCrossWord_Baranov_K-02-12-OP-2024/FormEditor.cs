@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 
 namespace JapanCrossWord_Baranov_K_02_12_OP_2024
-{
+{ 
     public partial class FormEditor : Form
     {
         char[,] grdb = null; // сетка кнопок
