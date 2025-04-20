@@ -386,16 +386,19 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         }
                         
                      }
-                     else MessageBox.Show("Горизонаталь не заполненна", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                     else MessageBox.Show("Horizontal field is empty", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                else MessageBox.Show("Вертикаль не заполненна", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else MessageBox.Show("Vertical field is empty", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else MessageBox.Show("Поле пусто", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else MessageBox.Show("Game field is empty", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-
+         
         private void piccolor_Click(object sender, EventArgs e)
         {
-            if (CD.ShowDialog() == DialogResult.OK) piccolor.BackColor=CD.Color;
+            if (CD.ShowDialog() == DialogResult.OK)
+            {
+                piccolor.BackColor = CD.Color;
+            }
         }
     }
 }

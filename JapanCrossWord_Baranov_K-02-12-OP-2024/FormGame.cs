@@ -95,7 +95,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     //если что-то пошло не так то не позволяем игре идти далее
                     isGameLoaded = false;
-                    return;
+                    return; 
                 }
 
                 this.Text = cmbgame.Text;
@@ -105,7 +105,8 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 sz = int.Parse(game[1]); //задаем размер клетки
                 string[] sc = game[2].Split(','); //вытягиваем акцентный цвет записанный в формате ARGB через запятую
                 cc = Color.FromArgb(int.Parse(sc[0]), int.Parse(sc[1]), int.Parse(sc[2]), int.Parse(sc[3])); //присваиваем цвет
-                
+                this.Height = 175 + grdb.GetLength(1)*sz; //задаем размер формы по вертикали
+
                 //присваиваем остальные значения
                 gov = game[3]; 
                 gog = game[4];
@@ -432,10 +433,14 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void win() //действия при победе
         {
             time.Stop();
+            this.Opacity = 0.5;
+            FormWin frm = new FormWin(sec,min);
+            frm.ShowDialog();
+            frm.Dispose();
+            this.Opacity = 1;
             lblt.Text = "00:00";
             sec = 0;
             min = 0;
-            MessageBox.Show("Вы победили");
             del(null,null);
             time.Start();
         }
