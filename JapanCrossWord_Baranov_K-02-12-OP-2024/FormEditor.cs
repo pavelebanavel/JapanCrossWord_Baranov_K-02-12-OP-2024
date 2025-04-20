@@ -17,7 +17,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         public int sz; // размер кнопок
         string gov = ""; // значение горизонтали
         string gog = ""; // значение вертикали
-        string level = "";
+        string level = ""; //вся инфа о уровне
         Color cc = Color.White;
 
         public FormEditor()
@@ -27,23 +27,26 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void FormEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //при нажатиии крестика закрывается все приложение
             Application.Exit();
         }
 
         private void exit_Click(object sender, EventArgs e)
         {
+            //выход в меню
             FormStart frm = new FormStart();
             this.Hide();
             frm.ShowDialog();
-            frm.Dispose();
+            this.Close();
         }
 
         private void FormEditor_Load(object sender, EventArgs e)
         {
-            change_game();
-            grid();
-            gorizontal();
-            vertical();
+            //запускаем воиды
+            change_game(); //задаем параметры
+            grid(); //рисуем сетку
+            gorizontal(); //рисуем горизонталь
+            vertical(); //рисуем вертикаль
         }
 
         private void change_game() //задаём параметры

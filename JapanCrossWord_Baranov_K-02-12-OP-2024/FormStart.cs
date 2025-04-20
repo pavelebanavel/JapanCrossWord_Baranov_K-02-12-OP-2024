@@ -16,9 +16,10 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             {
                 //переход на игровую форму
                 FormGame frm = new FormGame(cmbgame.Text, cmbgame.SelectedIndex); //передаем параметры в конструктор формы
-                this.Hide(); 
+                this.Hide();
                 frm.ShowDialog();
-                frm.Dispose();
+                this.Close(); 
+
             }
             else  
             {
@@ -26,7 +27,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 FormEditor frme = new FormEditor();
                 this.Hide();
                 frme.ShowDialog();
-                frme.Dispose();
+                this.Close();
             } 
         }
           

@@ -52,7 +52,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 FormEditor frme = new FormEditor();
                 this.Hide();
                 frme.ShowDialog();
-                frme.Dispose();
+                this.Close();
             }
             else
             {
@@ -86,7 +86,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                         FormStart frms = new FormStart();
                         this.Hide();
                         frms.ShowDialog();
-                        frms.Dispose();
+                        this.Close();
                     }  
                 }
                 else pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
@@ -288,7 +288,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             FormStart frms = new FormStart();
             this.Hide();
             frms.ShowDialog();
-            frms.Dispose();
+            this.Close();
         }
 
         private void exit_MouseEnter(object sender, EventArgs e) //минианимация для кнопки выхода
@@ -426,6 +426,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void FormGame_FormClosing(object sender, FormClosingEventArgs e) // закрываем игру
         {
+            //при нажатиии крестика закрывается все приложение
             Application.Exit(); 
         } 
 
