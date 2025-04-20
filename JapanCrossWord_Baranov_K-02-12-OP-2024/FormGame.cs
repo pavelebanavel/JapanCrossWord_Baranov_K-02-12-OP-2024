@@ -163,13 +163,14 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     if (gov != "")
                     {
                         lbl.Text = $"{gov.Substring(index,2)}";
-
                         if (lbl.Text == "00") 
                             {
+                            //если клетка пуста
                                 lbl.Text = "";
                                 lbl.BackColor = cc;
                             }
-                        if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
+                        //если клетка не пуста
+                        else lbl.Text = lbl.Text[1].ToString();
 
                         index += 2; //потому что данные хранятся по 2 символа
                     }
@@ -205,10 +206,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
                         if (lbl.Text == "00")
                         {
+                            //если клетка пуста
                             lbl.Text = "";
                             lbl.BackColor = cc;
                         }
-                        if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
+                        ////если клетка не пуста
+                        else lbl.Text = lbl.Text[1].ToString();
                         index += 2;//потому что данные хранятся по 2 символа
                     }
                     pnlg.Controls.Add(lbl); //добавляем горизонталь на панель
@@ -219,7 +222,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         {
             //объявляем переменные
             Button btn = sender as Button;
-            Point pos = (Point)(btn.Tag);
+            Point pos = (Point)btn.Tag; //вытягиваем позицию из нажатой кнопки
             int x;
             int y;
             foreach (Button btnc in pnlpole.Controls)
@@ -255,19 +258,20 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 }
 
             }
+
             //правый клик
             else if (sbtn.BackColor != Color.Red)
             {
-                sbtn.BackColor = Color.Red;
-                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
+                sbtn.BackColor = Color.Red; //красная клетка это пометка пользователем она ни на что не влияет
+                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0'; //по этому она равна пустой клетке
             }
             else
             {
                 sbtn.BackColor = cc;
                 grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
             }
-            string otv = grdo.Trim();
-            string notv = "";
+            string otv = grdo.Trim(); //обрезаем
+            string notv = ""; //то что натыкал игрок
 
             for (int y = 0; y < grdb.GetLength(1); y++)
             {
@@ -279,7 +283,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             if (otv == notv) win(); // запускаем победный void
         }
 
-        private void exit_Click(object sender, EventArgs e)
+        private void exit_Click(object sender, EventArgs e) //выход в главное меню
         { 
             FormStart frms = new FormStart();
             this.Hide();
@@ -287,19 +291,20 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             frms.Dispose();
         }
 
-        private void exit_MouseEnter(object sender, EventArgs e)
+        private void exit_MouseEnter(object sender, EventArgs e) //минианимация для кнопки выхода
         {
             exit.BackgroundImage = Properties.Resources.redexit;
             exit.BackColor = Color.Red;
         }
-        private void exit_MouseLeave(object sender, EventArgs e)
+        private void exit_MouseLeave(object sender, EventArgs e)  //минианимация для кнопки выхода
         {
             exit.BackgroundImage = Properties.Resources.exit;
             exit.BackColor = Color.White;
         }
 
-        private void info_Click(object sender, EventArgs e)
+        private void info_Click(object sender, EventArgs e) //форма с правилами игры
         {
+            //тут ничего интерсного, просто параметры
             Form helpform = new Form();
             helpform.Text = "Help";
             helpform.Icon = Properties.Resources.inform;
@@ -318,6 +323,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void otvet_Click(object sender, EventArgs e)
         {
+            //тут ничего интерсного кроме paintform.Show();
             Form paintform = new Form();
             paintform.Text = "Answer";
             paintform.Icon = Properties.Resources.otvetform;
@@ -329,23 +335,20 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             paintform.Top = this.Top;
             paintform.Left = this.Left + this.Width;
         }
-        private void paint_form(object sender, PaintEventArgs e)
+        private void paint_form(object sender, PaintEventArgs e) //рисуем на форме рисуунок ответа
         {
             Graphics g = e.Graphics;
-
-            int cz = 25;
-            string grds = grdo;
-            char[,] grdf = new char[grdb.GetLength(0), grdb.GetLength(1)];
-            int ct = 0;
+            int x=0, y=0;
             for (int r = 0; r < grdb.GetLength(1); r++)
             {
                 for (int c = 0; c < grdb.GetLength(0); c++)
-                {
-                    int x = c * cz;
-                    int y = r * cz;
-                        if (grds[ct] == '1') g.FillRectangle(Brushes.Black, x, y, cz, cz);
-                        else g.FillRectangle(Brushes.White, x, y, cz, cz);
-                    ct++;
+                { 
+                    //подгоняем под размер формы
+                    x = c * 25;
+                    y = r * 25;
+
+                    if (grdo[r*grdb.GetLength(0)+c] == '1') g.FillRectangle(Brushes.Black, x, y, 25, 25); //черный прямоугольник
+                    else g.FillRectangle(Brushes.White, x, y, 25, 25); //белый прямоугольник
                 }
             }
         }
@@ -377,7 +380,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             }
         }
 
-        private Color ApplyGray(Color original, float da)
+        private Color ApplyGray(Color original, float da) //применение серого на любой входящий цвет
         {
             return Color.FromArgb(
                 original.A,
@@ -389,6 +392,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void clear() //очистка текущего уровня
         {
+            //все очищаем
             time.Stop();
             lblt.Text = "00:00";
             sec = 0;
@@ -401,31 +405,31 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void time_Tick(object sender, EventArgs e) //таймер
         {
             sec++;
-            lblt.Text = $"{min:D2}:{sec:D2}";
+            lblt.Text = $"{min:D2}:{sec:D2}"; //присваиваем время
             if (sec >= 60)
             {
                 sec = 0;
                 min++;
             }
-            if (min >= 60)
+            if (min >= 60) //зачем считать часы?
             {
                 time.Stop();
                 lblt.Text += "+";
             }
 
-            if (min >= 2)
+            if (min >= 2) //врубаем подсказку
             {
                 otvet.Enabled = true;
                 otvet.BackColor = Color.White;
             }
         }
 
-        private void FormGame_FormClosing(object sender, FormClosingEventArgs e)
+        private void FormGame_FormClosing(object sender, FormClosingEventArgs e) // закрываем игру
         {
             Application.Exit(); 
-        } // закрываем игру
+        } 
 
-        private void pnlpole_Leave(object sender, EventArgs e)
+        private void pnlpole_Leave(object sender, EventArgs e) //убираем крестик когда пользователь не взаимодействует с полем
         {
             foreach (Button btn in pnlpole.Controls) if (btn.BackColor == ApplyGray(cc, 30)) btn.BackColor = cc;
         }
@@ -434,14 +438,18 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         {
             time.Stop();
             this.Opacity = 0.5;
-            FormWin frm = new FormWin(sec,min);
-            frm.ShowDialog();
-            frm.Dispose();
+
+            FormWin frmw = new FormWin(sec,min);
+            frmw.ShowDialog();
+            frmw.Dispose();
+            
+            //все сбрасываем
             this.Opacity = 1;
             lblt.Text = "00:00";
             sec = 0;
             min = 0;
             del(null,null);
+
             time.Start();
         }
     }
