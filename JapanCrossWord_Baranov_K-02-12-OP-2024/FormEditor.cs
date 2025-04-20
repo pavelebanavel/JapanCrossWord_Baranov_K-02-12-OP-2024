@@ -93,7 +93,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     btn.Location = new Point(x * sz, y * sz);
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.ForeColor = Color.Black;
-                    if (btn.BackColor != Color.Black)btn.BackColor = cc;
 
                     btn.Tag = new Point(x, y); //записываем координаты в Tag
                     pnlpole.Controls.Add(btn); //добаляем на форму
@@ -120,7 +119,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     y = ((Point)btnc.Tag).Y;
                     btnc.BackColor = cc;
 
-                    if (pos.X == x || pos.Y == y) btnc.BackColor = Color.LightGray; //рисуем крестик
+                    if (pos.X == x || pos.Y == y) btnc.BackColor = ApplyGray(cc, 30); //рисуем крестик
                 }
             }
         }
@@ -162,14 +161,18 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
                     if (gog != "" && index + 1 < gog.Length)
                     {
-                        lbl.Text = $"{gog[index]}{gog[index + 1]}";
+                        lbl.Text = $"{gog.Substring(index,2)}";
 
                         if (lbl.Text == "00")
                         {
                             lbl.Text = "";
                             lbl.BackColor = cc;
                         }
-                        if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
+                        else
+                        { 
+                            lbl.Text = lbl.Text[1].ToString(); 
+                            lbl.BackColor = ApplyGray(cc,30);
+                        }
                         index += 2;//потому что данные хранятся по 2 символа
                     }
 
@@ -201,14 +204,19 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
                     if (gov != "" && index + 1 < gov.Length)
                     {
-                        lbl.Text = $"{gov[index]}{gov[index + 1]}";
+                        lbl.Text = $"{gov.Substring(index,2)}";
 
                         if (lbl.Text == "00")
                         {
                             lbl.Text = "";
                             lbl.BackColor = cc;
                         }
-                        if (lbl.Text != "" && lbl.Text[0] == '0') lbl.Text = lbl.Text[1].ToString();
+                        else
+                        { 
+                            lbl.Text = lbl.Text[1].ToString(); 
+                            lbl.BackColor = ApplyGray(cc,30);
+                        }
+
                         index += 2;//потому что данные хранятся по 2 символа
                     }
 
@@ -236,7 +244,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             if (vl != 0)
             {
                 lbl.Text = vl.ToString();
-                lbl.BackColor = Color.LightGray;
+                lbl.BackColor = ApplyGray(cc, 30);
             }
             else 
             {
@@ -248,7 +256,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             for (int y = 0; y < grdb.GetLength(1); y++)
             {
                 for (int x = 0; x < 4; x++)
-                {
+                { 
                     lbll.X = x;
                     lbll.Y = y;
                     foreach (Label lblc in pnlv.Controls)
@@ -287,7 +295,15 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 }
             }
         }
-        
+
+        private Color ApplyGray(Color original, float da)
+        {
+            return Color.FromArgb(
+                original.A,
+                (int)(original.R * (1 - da / 100) * 0.8 + 211 * 0.2),
+                (int)(original.G * (1 - da / 100) * 0.8 + 211 * 0.2),
+                (int)(original.B * (1 - da / 100) * 0.8 + 211 * 0.2));
+        }
 
         private void buttonApply_Click(object sender, EventArgs e)
         {

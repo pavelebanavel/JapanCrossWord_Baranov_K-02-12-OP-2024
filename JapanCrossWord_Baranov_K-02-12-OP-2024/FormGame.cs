@@ -18,11 +18,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         string gov = ""; // значение горизонтали
         string gog = ""; // значение вертикали
         int sec = 0, min = 0; //таймер
-        Color cc = Color.White;
-        bool isGameLoaded = false;
+        Color cc = Color.White; // акцентный цвет
+        bool isGameLoaded = false; //пока параметры игры не будут заданны, то остальные воиды не смогут работать
         public FormGame(string gametext,int gameSI)
         {
             InitializeComponent();
+            //передаем параметры через конструктор формы
             cmbgame.Text = gametext;
             cmbgame.SelectedIndex = gameSI;
         }
@@ -32,17 +33,22 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         {
             //запускаем войды
             change_game(); //выбор уровня
-            grid(); //сетка
-            gorizontal(); //горизонталь
-            vertical(); //вертикаль
+            if (isGameLoaded)
+            { 
+                grid(); //сетка
+                gorizontal(); //горизонталь
+                vertical(); //вертикаль
+            }
         }
         private void change_game() //задаём параметры
         {
-            string pgame = "";
+            string pgame = ""; //сюда задаются параметры из вне
+            otvet.Enabled = false;
+            otvet.BackColor = Color.LightGray;
 
             if (cmbgame.SelectedIndex == 4)
             {
-                //открываем форму для редактирования уровней
+                //переход на редактор уровней
                 FormEditor frme = new FormEditor();
                 this.Hide();
                 frme.ShowDialog();
@@ -53,21 +59,30 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 //подгружаем параметры для игры
                 if (cmbgame.SelectedIndex == 3)
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog(); // диалог
+                    //открываем файлпикер и используем данные полученные из него
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.Filter = "Level files (*.lvl)|*.lvl|All files (*.*)|*.*";
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
+                        //передаем данные из файл пикера
                         string filepath = openFileDialog.FileName;
+                        
+                        //открываем выбранный файл для чтения
                         FileStream lvl = new FileStream(filepath, FileMode.Open, FileAccess.Read);
                         StreamReader lvlf = new StreamReader(lvl);
+
+                        //присваиваем данные из файла
                         pgame = lvlf.ReadToEnd();
                         cmbgame.Text = Path.GetFileName(filepath);
+
+                        //закрываем
                         lvlf.Close();
                         lvlf.Dispose();
                         lvl.Dispose();
                     }
                     else
                     {
+                        //переходим на стартовую форму
                         FormStart frms = new FormStart();
                         this.Hide();
                         frms.ShowDialog();
@@ -76,24 +91,27 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 }
                 else pgame = (string)Properties.Resources.ResourceManager.GetObject(cmbgame.Text);
 
-                if(pgame == "" || pgame == null)
+                if (pgame == "" || pgame == null)
                 {
+                    //если что-то пошло не так то не позволяем игре идти далее
                     isGameLoaded = false;
                     return;
                 }
 
                 this.Text = cmbgame.Text;
-                string[] game = pgame.Split('\n');
-                string[] gz = game[0].Split('x');
-                grdb = new char[int.Parse(gz[0]), int.Parse(gz[1])];
-                sz = int.Parse(game[1]);
-                string[] sc = game[2].Split(',');
-                cc = Color.FromArgb(int.Parse(sc[0]), int.Parse(sc[1]), int.Parse(sc[2]), int.Parse(sc[3]));
-                gov = game[3];
+                string[] game = pgame.Split('\n'); //разбиваем данные из файла на массив строк
+                string[] gz = game[0].Split('x'); //разбиваем на 2 значения. Например 13x10 превращаются в 2 int значения
+                grdb = new char[int.Parse(gz[0]), int.Parse(gz[1])]; //задаем размеры игровой сетки
+                sz = int.Parse(game[1]); //задаем размер клетки
+                string[] sc = game[2].Split(','); //вытягиваем акцентный цвет записанный в формате ARGB через запятую
+                cc = Color.FromArgb(int.Parse(sc[0]), int.Parse(sc[1]), int.Parse(sc[2]), int.Parse(sc[3])); //присваиваем цвет
+                
+                //присваиваем остальные значения
+                gov = game[3]; 
                 gog = game[4];
                 grdo = game[5];
             }
-            isGameLoaded = true;
+            isGameLoaded = true; //теперь остальные воиды могут выполняться
         }
         public void grid() //создаем игровую сетку
         {
@@ -101,7 +119,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     for (int y = 0; y < grdb.GetLength(1); y++)
                     {
-                        grdb[x, y] = '0';
+                        grdb[x, y] = '0'; //заполняем сетку нажатий нулями
                         Button btn = new Button();
 
                         //настройка стиля
@@ -122,17 +140,14 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void vertical() //вертикаль
         {
-            string gv = ""; //переменная отвечает за заполнение вертикали
             int index = 0; // индекс
-
-            if (grdb.GetLength(1) <= (gov.Length / 8) + 1) gv = gov;
             for (int y = 0; y < grdb.GetLength(1); y++)
             {
                 for (int x = 0; x < 4; x++)
                 {
                     // настройка стиля
                     Label lbl = new Label();
-                    lbl.BackColor = Color.LightGray;
+                    lbl.BackColor = ApplyGray(cc, 30);
                     lbl.Width = sz; lbl.Height = sz;
                     lbl.FlatStyle = FlatStyle.Flat;
                     lbl.BorderStyle = BorderStyle.FixedSingle;
@@ -144,9 +159,9 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     lbl.Location = new Point(x * sz, y * sz);
 
                     //заполнение
-                    if (gv != "")
+                    if (gov != "")
                     {
-                        lbl.Text = $"{gv[index]}{gv[index + 1]}";
+                        lbl.Text = $"{gov.Substring(index,2)}";
 
                         if (lbl.Text == "00") 
                             {
@@ -164,10 +179,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void gorizontal() //горизонталь
         {
-            string gg = ""; //переменная отвечает за заполнение горизонтали
             int index = 0; //индекс
-
-            if (grdb.GetLength(0) <= (gog.Length / 6) + 1) gg = gog;
 
             for (int y = 0; y < 3; y++)
             {
@@ -175,7 +187,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     // настройка стиля
                     Label lbl = new Label();
-                    lbl.BackColor = Color.LightGray;
+                    lbl.BackColor = ApplyGray(cc, 30);
                     lbl.Width = sz; lbl.Height = sz;
                     lbl.FlatStyle = FlatStyle.Flat;
                     lbl.BorderStyle = BorderStyle.FixedSingle;
@@ -186,9 +198,9 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     lbl.Location = new Point(x * sz, y * sz);
 
                     //заполнение
-                    if (gg != "")
+                    if (gog != "")
                     {
-                        lbl.Text = $"{gg[index]}{gg[index + 1]}";
+                        lbl.Text = $"{gog.Substring(index,2)}";
 
                         if (lbl.Text == "00")
                         {
@@ -218,7 +230,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     y = ((Point)btnc.Tag).Y;    
                     btnc.BackColor = cc;
                     
-                    if (pos.X == x || pos.Y == y) btnc.BackColor = Color.LightGray; //рисуем крестик
+                    if (pos.X == x || pos.Y == y) btnc.BackColor = ApplyGray(cc,30); //рисуем крестик
                 }
             }
         }
@@ -282,7 +294,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         private void exit_MouseLeave(object sender, EventArgs e)
         {
             exit.BackgroundImage = Properties.Resources.exit;
-            exit.BackColor = cc;
+            exit.BackColor = Color.White;
         }
 
         private void info_Click(object sender, EventArgs e)
@@ -338,10 +350,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         }
         private void del(object sender, EventArgs e) //удаление данных текущего поля
         {
-            time.Stop();
-            lblt.Text = "00:00";
-            sec = 0;
-            min = 0;
             foreach (Button btn in pnlpole.Controls) btn.BackColor = cc; // перекрашиваем
 
             //очищаем
@@ -352,7 +360,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     grdb[x, y] = '0';
                 }
             }
-            time.Start();
         }
 
         private void cmbgame_SelectedIndexChanged(object sender, EventArgs e) //выбор уровня
@@ -368,6 +375,17 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 vertical(); //вертикаль
             }
         }
+
+        private Color ApplyGray(Color original, float da)
+        {
+            return Color.FromArgb(
+                original.A,
+                (int)(original.R * (1 - da / 100) * 0.8 + 211 * 0.2),
+                (int)(original.G * (1 - da / 100) * 0.8 + 211 * 0.2),
+                (int)(original.B * (1 - da / 100) * 0.8 + 211 * 0.2));
+        }
+
+
         private void clear() //очистка текущего уровня
         {
             time.Stop();
@@ -393,6 +411,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 time.Stop();
                 lblt.Text += "+";
             }
+
+            if (min >= 2)
+            {
+                otvet.Enabled = true;
+                otvet.BackColor = Color.White;
+            }
         }
 
         private void FormGame_FormClosing(object sender, FormClosingEventArgs e)
@@ -400,10 +424,20 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             Application.Exit(); 
         } // закрываем игру
 
+        private void pnlpole_Leave(object sender, EventArgs e)
+        {
+            foreach (Button btn in pnlpole.Controls) if (btn.BackColor == ApplyGray(cc, 30)) btn.BackColor = cc;
+        }
+
         private void win() //действия при победе
         {
+            time.Stop();
+            lblt.Text = "00:00";
+            sec = 0;
+            min = 0;
             MessageBox.Show("Вы победили");
             del(null,null);
+            time.Start();
         }
     }
 }
