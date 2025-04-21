@@ -150,7 +150,7 @@
             this.lblb.AutoSize = true;
             this.lblb.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblb.ForeColor = System.Drawing.Color.Black;
-            this.lblb.Location = new System.Drawing.Point(680, 125);
+            this.lblb.Location = new System.Drawing.Point(680, 107);
             this.lblb.Name = "lblb";
             this.lblb.Size = new System.Drawing.Size(97, 32);
             this.lblb.TabIndex = 22;
@@ -161,7 +161,7 @@
             this.numb.BackColor = System.Drawing.Color.White;
             this.numb.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numb.ForeColor = System.Drawing.Color.Black;
-            this.numb.Location = new System.Drawing.Point(545, 125);
+            this.numb.Location = new System.Drawing.Point(545, 107);
             this.numb.Maximum = new decimal(new int[] {
             50,
             0,
@@ -236,7 +236,7 @@
             this.txtname.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtname.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtname.ForeColor = System.Drawing.Color.Black;
-            this.txtname.Location = new System.Drawing.Point(545, 212);
+            this.txtname.Location = new System.Drawing.Point(545, 177);
             this.txtname.Name = "txtname";
             this.txtname.Size = new System.Drawing.Size(129, 33);
             this.txtname.TabIndex = 26;
@@ -247,7 +247,7 @@
             this.lbln.AutoSize = true;
             this.lbln.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbln.ForeColor = System.Drawing.Color.Black;
-            this.lbln.Location = new System.Drawing.Point(680, 212);
+            this.lbln.Location = new System.Drawing.Point(680, 177);
             this.lbln.Name = "lbln";
             this.lbln.Size = new System.Drawing.Size(78, 32);
             this.lbln.TabIndex = 27;
@@ -291,7 +291,7 @@
             // piccolor
             // 
             this.piccolor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.piccolor.Location = new System.Drawing.Point(545, 299);
+            this.piccolor.Location = new System.Drawing.Point(545, 247);
             this.piccolor.Name = "piccolor";
             this.piccolor.Size = new System.Drawing.Size(129, 33);
             this.piccolor.TabIndex = 31;
@@ -303,7 +303,7 @@
             this.lblcolor.AutoSize = true;
             this.lblcolor.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblcolor.ForeColor = System.Drawing.Color.Black;
-            this.lblcolor.Location = new System.Drawing.Point(680, 299);
+            this.lblcolor.Location = new System.Drawing.Point(680, 247);
             this.lblcolor.Name = "lblcolor";
             this.lblcolor.Size = new System.Drawing.Size(111, 32);
             this.lblcolor.TabIndex = 32;

@@ -64,6 +64,7 @@
             // 
             // otvet
             // 
+            this.otvet.BackColor = System.Drawing.Color.White;
             this.otvet.BackgroundImage = global::JapanCrossWord_Baranov_K_02_12_OP_2024.Properties.Resources.otvet;
             this.otvet.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.otvet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -72,8 +73,8 @@
             this.otvet.Name = "otvet";
             this.otvet.Size = new System.Drawing.Size(30, 30);
             this.otvet.TabIndex = 4;
-            this.tt.SetToolTip(this.otvet, "Правильный ответ");
-            this.otvet.UseVisualStyleBackColor = true;
+            this.tt.SetToolTip(this.otvet, "Correct answer");
+            this.otvet.UseVisualStyleBackColor = false;
             this.otvet.Click += new System.EventHandler(this.otvet_Click);
             // 
             // delete
@@ -87,7 +88,7 @@
             this.delete.Name = "delete";
             this.delete.Size = new System.Drawing.Size(30, 30);
             this.delete.TabIndex = 5;
-            this.tt.SetToolTip(this.delete, "Очистка поля!");
+            this.tt.SetToolTip(this.delete, "Clear field");
             this.delete.UseVisualStyleBackColor = true;
             this.delete.Click += new System.EventHandler(this.del);
             // 
@@ -100,7 +101,7 @@
             this.info.Name = "info";
             this.info.Size = new System.Drawing.Size(30, 30);
             this.info.TabIndex = 3;
-            this.tt.SetToolTip(this.info, "Правила игры");
+            this.tt.SetToolTip(this.info, "Help");
             this.info.UseVisualStyleBackColor = true;
             this.info.Click += new System.EventHandler(this.info_Click);
             // 
@@ -113,7 +114,7 @@
             this.exit.Name = "exit";
             this.exit.Size = new System.Drawing.Size(30, 30);
             this.exit.TabIndex = 2;
-            this.tt.SetToolTip(this.exit, "Выход в меню");
+            this.tt.SetToolTip(this.exit, "Exit to menu");
             this.exit.UseVisualStyleBackColor = true;
             this.exit.Click += new System.EventHandler(this.exit_Click);
             this.exit.MouseEnter += new System.EventHandler(this.exit_MouseEnter);
@@ -125,6 +126,8 @@
             this.pnlpole.Name = "pnlpole";
             this.pnlpole.Size = new System.Drawing.Size(358, 355);
             this.pnlpole.TabIndex = 6;
+            this.pnlpole.Leave += new System.EventHandler(this.pnlpole_Leave);
+            this.pnlpole.MouseLeave += new System.EventHandler(this.pnlpole_Leave);
             // 
             // pnlg
             // 

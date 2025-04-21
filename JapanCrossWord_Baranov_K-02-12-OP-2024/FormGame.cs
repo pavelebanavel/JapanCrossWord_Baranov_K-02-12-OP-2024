@@ -118,24 +118,25 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         {
             for (int x = 0; x < grdb.GetLength(0); x++)
                 {
-                    for (int y = 0; y < grdb.GetLength(1); y++)
-                    {
-                        grdb[x, y] = '0'; //заполняем сетку нажатий нулями
-                        Button btn = new Button();
+                for (int y = 0; y < grdb.GetLength(1); y++)
+                {
+                    grdb[x, y] = '0'; //заполняем сетку нажатий нулями
+                    Button btn = new Button();
 
-                        //настройка стиля
-                        btn.Width = sz; btn.Height = sz;
-                        btn.Location = new Point(x * sz, y * sz);
-                        btn.FlatStyle = FlatStyle.Flat;
-                        btn.ForeColor = Color.Black;
-                        btn.BackColor = cc;
-                        btn.Tag = new Point(x, y); //записываем координаты в Tag
-                        pnlpole.Controls.Add(btn); //добаляем на форму
+                    //настройка стиля
+                    btn.Width = sz; btn.Height = sz;
+                    btn.Location = new Point(x * sz, y * sz);
+                    btn.FlatStyle = FlatStyle.Flat;
+                    btn.ForeColor = Color.Black;
+                    btn.Font = btn.Font = new Font("Microsoft Sans Serif", sz / 3);
+                    btn.BackColor = cc;
+                    btn.Tag = new Point(x, y); //записываем координаты в Tag
+                    pnlpole.Controls.Add(btn); //добаляем на форму
 
-                        //подписываем на события
-                        btn.MouseDown += Button_MouseDown;
-                        btn.MouseEnter += Button_MouseEnter;
-                    }
+                    //подписываем на события
+                    btn.MouseDown += Button_MouseDown;
+                    btn.MouseEnter += Button_MouseEnter;
+                }
             }
         }
 
@@ -227,7 +228,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             int y;
             foreach (Button btnc in pnlpole.Controls)
             {
-                if (btnc.BackColor != Color.Black && btnc.BackColor != Color.Red) // чтобы не закрасить рисунок пользователя
+                if (btnc.BackColor != Color.Black) // чтобы не закрасить рисунок пользователя
                 {
                     //присваивания
                     x = ((Point)btnc.Tag).X;
@@ -249,24 +250,28 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 if (grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] == '0')
                 {
                     sbtn.BackColor = Color.Black;
+                    sbtn.Text = "";
                     grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '1';
                 }
                 else
                 {
                     sbtn.BackColor = cc;
+                    sbtn.Text = "";
                     grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
                 }
 
             }
 
             //правый клик
-            else if (sbtn.BackColor != Color.Red)
+            else if (sbtn.Text != "X")
             {
-                sbtn.BackColor = Color.Red; //красная клетка это пометка пользователем она ни на что не влияет
-                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0'; //по этому она равна пустой клетке
+                sbtn.Text = "X"; //пометка пользователем ни на что не влияет
+                sbtn.BackColor = cc;
+                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0'; //она равна пустой клетке
             }
             else
             {
+                sbtn.Text = "";
                 sbtn.BackColor = cc;
                 grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
             }
@@ -304,23 +309,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void info_Click(object sender, EventArgs e) //форма с правилами игры
         {
-            //тут ничего интерсного, просто параметры
-            Form helpform = new Form();
-            helpform.Text = "Help";
-            helpform.Icon = Properties.Resources.inform;
-            helpform.Size = new Size(200, 200);
-            helpform.MaximizeBox = false; helpform.MinimizeBox = false;
-            helpform.FormBorderStyle = FormBorderStyle.Fixed3D;
-            PictureBox pichelp = new PictureBox();
-            pichelp.SizeMode = PictureBoxSizeMode.StretchImage;
-            pichelp.Image = Properties.Resources.information;
-            pichelp.Size = new Size(helpform.Width - 15, helpform.Height - 35);
-            helpform.Controls.Add(pichelp);
+            FormHelp helpform = new FormHelp();
             helpform.Show();
             helpform.Top = this.Top;
             helpform.Left = this.Left + this.Width;
+            helpform.Dispose();
         }
-
+         
         private void otvet_Click(object sender, EventArgs e)
         {
             //тут ничего интерсного кроме paintform.Show();
@@ -331,11 +326,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             paintform.MaximizeBox = false; paintform.MinimizeBox = false;
             paintform.FormBorderStyle = FormBorderStyle.Fixed3D;
             paintform.Paint += new PaintEventHandler(paint_form);
+            paintform.StartPosition = FormStartPosition.CenterScreen;
             paintform.Show();
             paintform.Top = this.Top;
             paintform.Left = this.Left + this.Width;
         }
-        private void paint_form(object sender, PaintEventArgs e) //рисуем на форме рисуунок ответа
+        private void paint_form(object sender, PaintEventArgs e) //рисуем на форме рисунок ответа
         {
             Graphics g = e.Graphics;
             int x=0, y=0;

@@ -83,7 +83,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 10x10
         ///35
-        ///255,240,248,250
+        ///255,225,232,255
         ///00000001000000030000020100000005000000040000000600000007000006010000070100000306
         ///000300000000000000000202010000000000000001020709070605040103
         ///0001000000011100000011010000001111100000001111000001111110000111111100001111110101111111011110111111.
@@ -97,7 +97,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 13x12
         ///27
-        ///255,244,251,245
+        ///255,234,251,235
         ///000001010000020200000303000207020003050300000013000000130000060600030103000201020002010200000005
         ///000000000000000000000000000000020205050405050202000005090606020104010206060905
         ///010000000001001100000001100111000001110110111111101111101111101111111111111111111111111111111111101111110111001001110001100100110000011010110000000111110000.
@@ -111,7 +111,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 11x11
         ///32
-        ///255,255,240,255
+        ///255,255,230,255
         ///0000020201010101020101020003010300040104000000090000000700000009000401040002010200000101
         ///000000000000000000000004040001030003010004040103080503070305080301
         ///0001101100010001010001110010100111110010011111110101111011111111100011111110001111111110111101011110110010011000100000100.
@@ -133,26 +133,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon inform {
-            get {
-                object obj = ResourceManager.GetObject("inform", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap information {
-            get {
-                object obj = ResourceManager.GetObject("information", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap otvet {
@@ -169,16 +149,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024.Properties {
             get {
                 object obj = ResourceManager.GetObject("otvetform", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap plus {
-            get {
-                object obj = ResourceManager.GetObject("plus", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

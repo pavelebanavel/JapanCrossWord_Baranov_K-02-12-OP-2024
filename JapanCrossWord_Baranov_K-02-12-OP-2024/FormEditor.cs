@@ -37,7 +37,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             FormStart frm = new FormStart();
             this.Hide();
             frm.ShowDialog();
-            this.Close();
+            this.Close(); 
         }
 
         private void FormEditor_Load(object sender, EventArgs e)
