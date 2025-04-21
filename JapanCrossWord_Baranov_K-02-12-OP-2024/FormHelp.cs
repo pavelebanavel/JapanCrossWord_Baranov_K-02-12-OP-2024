@@ -19,10 +19,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         }
 
         private void FormHelp_Load(object sender, EventArgs e)
-        {
+        { //простая реализация основной игры
+
+            //вертикальная подсказка
             string p = "0100010" +
                        "0112110";
 
+            //заполнение поля
             string o = "0100010" +
                        "0000000" +
                        "0101010" +
@@ -42,11 +45,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
                     lbl.Font = new Font("Microsoft Sans Serif", 11);
                     lbl.Location = new Point(x * 35 + 12, y * 35 + 245);
+
                     this.Controls.Add(lbl); //добаляем на форму
 
                     if (p[y * 7 + x] != '0')
                     {
-                        lbl.Text = $"{p[y*7+x]}";
+                        //забиваем значения если клетка не пуста
+                        lbl.Text = $"{p[y*7+x]}"; //y*7+x по формуле вместо индекса
                         lbl.BackColor= Color.DarkGray;
                     } 
                 }
@@ -66,10 +71,12 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
                     lbl.Font = new Font("Microsoft Sans Serif", 11);
                     lbl.Location = new Point(x * 35 + 12, y * 35 + 330);
+
                     this.Controls.Add(lbl); //добаляем на форму
 
                     if (o[y * 7 + x] != '0')
                     {
+                        //закрашиваем клетку
                         lbl.BackColor = Color.Black;
                     }
                 }

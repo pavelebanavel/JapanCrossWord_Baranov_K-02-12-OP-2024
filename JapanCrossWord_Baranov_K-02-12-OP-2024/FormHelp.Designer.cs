@@ -134,7 +134,10 @@
             this.Controls.Add(this.btnblack);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormHelp";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game rules & Help";
             this.Load += new System.EventHandler(this.FormHelp_Load);
             this.ResumeLayout(false);

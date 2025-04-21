@@ -313,7 +313,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             helpform.Show();
             helpform.Top = this.Top;
             helpform.Left = this.Left + this.Width;
-            helpform.Dispose();
         }
          
         private void otvet_Click(object sender, EventArgs e)
