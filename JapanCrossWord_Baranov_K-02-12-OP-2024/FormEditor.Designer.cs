@@ -80,6 +80,8 @@
             this.pnlpole.Name = "pnlpole";
             this.pnlpole.Size = new System.Drawing.Size(358, 355);
             this.pnlpole.TabIndex = 15;
+            this.pnlpole.Leave += new System.EventHandler(this.pnlpole_Leave);
+            this.pnlpole.MouseLeave += new System.EventHandler(this.pnlpole_Leave);
             // 
             // delete
             // 

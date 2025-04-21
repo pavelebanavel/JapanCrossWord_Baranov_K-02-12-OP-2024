@@ -43,6 +43,6 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             if (cmbgame.Text == "Import") btnStart.Text = "Import Game";
             else if (cmbgame.Text == "Editor") btnStart.Text = "New";
             else btnStart.Text = "Start Game";
-        }
+        } 
     }
 }

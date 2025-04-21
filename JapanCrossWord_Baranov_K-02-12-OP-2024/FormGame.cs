@@ -249,12 +249,14 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             {
                 if (grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] == '0')
                 {
+                    //добавляем нажатие кнопки в массив
                     sbtn.BackColor = Color.Black;
                     sbtn.Text = "";
                     grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '1';
                 }
                 else
                 {
+                    //стираем нажатие кнопки из массива
                     sbtn.BackColor = cc;
                     sbtn.Text = "";
                     grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
@@ -267,13 +269,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             {
                 sbtn.Text = "X"; //пометка пользователем ни на что не влияет
                 sbtn.BackColor = cc;
-                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0'; //она равна пустой клетке
+                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0'; //пометка равна пустой клетке всегда
             }
             else
             {
                 sbtn.Text = "";
                 sbtn.BackColor = cc;
-                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
+                grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0'; //пометка равна пустой клетке всегда
             }
             string otv = grdo.Trim(); //обрезаем
             string notv = ""; //то что натыкал игрок
@@ -429,7 +431,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         {
             foreach (Button btn in pnlpole.Controls) if (btn.BackColor == ApplyGray(cc, 30)) btn.BackColor = cc;
         }
-
+         
         private void win() //действия при победе
         {
             time.Stop();

@@ -20,7 +20,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void FormHelp_Load(object sender, EventArgs e)
         { //простая реализация основной игры
-
+             
             //вертикальная подсказка
             string p = "0100010" +
                        "0112110";

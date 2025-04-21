@@ -18,6 +18,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
         string gov = ""; // значение горизонтали
         string gog = ""; // значение вертикали
         string level = ""; //вся инфа о уровне
+        int vl = 0; //временное значение числа в клетке
         Color cc = Color.White;
 
         public FormEditor()
@@ -51,22 +52,18 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
         private void change_game() //задаём параметры
         {
-            lblgame.Text = txtname.Text;
-            cc = piccolor.BackColor;
+            lblgame.Text = txtname.Text; //дублируем текст
+            cc = piccolor.BackColor; //задаем выбранный пользователем цвет
+            sz = (int)numb.Value;
 
-            if (grdb != null)
-            {
-                if (grdb.GetLength(0) != (int)numx.Value) gog = "";
-                if (grdb.GetLength(1) != (int)numy.Value) gov = "";
-            }
-            if (sz != numb.Value) sz = (int)numb.Value;
+            //преобразовываем grdb
             if (grdb == null) grdb = new char[(int)numx.Value, (int)numy.Value];
             else grdb=transform(grdb);
         }
 
         private char[,] transform(char[,] matrix)
         {
-            char[,] grdc = new char[(int)numx.Value, (int)numy.Value];
+            char[,] grdc = new char[(int)numx.Value, (int)numy.Value]; //массив по новым размерам
 
             // Копируем данные из исходного массива в новый
             for (int i = 0; i < Math.Min(matrix.GetLength(0), grdc.GetLength(0)); i++)
@@ -87,6 +84,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 {
                     Button btn = new Button();
 
+                    //перекрашиваем по grdb
                     if (grdb != null && grdb[x, y] == '1') btn.BackColor = Color.Black;
                     else btn.BackColor = cc;
                     if (grdb[x, y] == '\0') grdb[x, y] = '0';
@@ -98,6 +96,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     btn.ForeColor = Color.Black;
 
                     btn.Tag = new Point(x, y); //записываем координаты в Tag
+
                     pnlpole.Controls.Add(btn); //добаляем на форму
 
                     //подписываем на события
@@ -131,11 +130,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             Button sbtn = (Button)sender; //нажатая кнопка
             if (grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] == '0')
             {
+                //добавляем нажатие кнопки в массив
                 sbtn.BackColor = Color.Black;
                 grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '1';
             }
             else
             {
+                //стираем нажатие кнопки из массива
                 sbtn.BackColor = cc;
                 grdb[((Point)sbtn.Tag).X, ((Point)sbtn.Tag).Y] = '0';
 
@@ -159,8 +160,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
                     lbl.Tag = new Point(x, y); //записываем координаты в Tag
 
-                    // настройка положения
-                    lbl.Location = new Point(x * sz, y * sz);
+                    lbl.Location = new Point(x * sz, y * sz); // настройка положения
 
                     if (gog != "" && index + 1 < gog.Length)
                     {
@@ -168,11 +168,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
                         if (lbl.Text == "00")
                         {
+                            //пустая клетка
                             lbl.Text = "";
                             lbl.BackColor = cc;
                         }
                         else
                         { 
+                            //заполняем клетку
                             lbl.Text = lbl.Text[1].ToString(); 
                             lbl.BackColor = ApplyGray(cc,30);
                         }
@@ -180,7 +182,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     }
 
                     pnlg.Controls.Add(lbl); //добавляем горизонталь на панель
-                    lbl.MouseDown += lbl_Click;
+                    lbl.MouseDown += lblg_Click; //подписываем на событие
                 }
             }
             
@@ -211,11 +213,13 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
 
                         if (lbl.Text == "00")
                         {
+                            //пустая клетка
                             lbl.Text = "";
                             lbl.BackColor = cc;
                         }
                         else
-                        { 
+                        {
+                            //заполняем клетку
                             lbl.Text = lbl.Text[1].ToString(); 
                             lbl.BackColor = ApplyGray(cc,30);
                         }
@@ -224,82 +228,84 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                     }
 
                     pnlv.Controls.Add(lbl); //добавляем вертикаль на панель
-                    lbl.MouseDown += lbl_Click;
+                    lbl.MouseDown += lblv_Click; //подписываем на событие
                 }
             }
         }
-        private void lbl_Click(object sender, EventArgs e)
+        private void lblv_Click(object sender, EventArgs e)
         {
-            Label lbl = (Label)sender;
-            int vl = 0;
-            Point lbll = new Point(0, 0);
-            if (lbl.Text != "") vl = int.Parse(lbl.Text);
-            if (lbl.Parent.Name == "pnlv")
+            Label lbl = (Label)sender; //нажатая label
+            vl = 0;
+
+            if (lbl.Text != "") vl = int.Parse(lbl.Text); //заталкиваем текст из label
+            if (vl >= grdb.GetLength(0))
             {
-                if (vl >= grdb.GetLength(0)) vl = 0;
-                else vl++;
+                //очищаем клетку  
+                vl = 0;
+                lbl.BackColor = cc;
+                lbl.Text = "";
             }
             else
             {
-                if (vl >= grdb.GetLength(1)) vl = 0; 
-                else vl++;
-            }
-            if (vl != 0)
-            {
+                //заполняем клетку
+                vl++;
                 lbl.Text = vl.ToString();
                 lbl.BackColor = ApplyGray(cc, 30);
             }
-            else 
-            {
-                lbl.Text = "";
-                lbl.BackColor = cc;
-            }
-            gog = "";
-            gov = "";
+
+            gov = ""; //обнуляем
+
+
+            //алгоритм превращения вертикали в gov
             for (int y = 0; y < grdb.GetLength(1); y++)
             {
                 for (int x = 0; x < 4; x++)
                 { 
-                    lbll.X = x;
-                    lbll.Y = y;
-                    foreach (Label lblc in pnlv.Controls)
-                    {
-                        if (((Point)lblc.Tag).X == lbll.X && ((Point)lblc.Tag).Y == lbll.Y) lbl = lblc;
-                    }
-                    if (lbl.Parent.Name == "pnlv")
-                    {
-                        if (lbll.X == ((Point)lbl.Tag).X && lbll.Y == ((Point)lbl.Tag).Y)
-                        {
-                            if (lbl.Text != "") gov += $"{int.Parse(lbl.Text):D2}";
-                            else gov += "00";
-                        }
-                    }
-                }
-            }
-
-            for (int y = 0; y < 3; y++)
-            {
-                for (int x = 0; x < grdb.GetLength(0); x++)
-                {
-                    lbll.X = x;
-                    lbll.Y = y;
-                    foreach (Label lblc in pnlg.Controls)
-                    {
-                        if (((Point)lblc.Tag).X == lbll.X && ((Point)lblc.Tag).Y == lbll.Y) lbl = lblc;
-                    }
-                    if (lbl.Parent.Name == "pnlg")
-                    {
-                        if (lbll.X == ((Point)lbl.Tag).X && lbll.Y == ((Point)lbl.Tag).Y)
-                        {
-                            if (lbl.Text != "") gog += $"{int.Parse(lbl.Text):D2}";
-                            else gog += "00";
-                        }
-                    }
+                    foreach (Label lblc in pnlv.Controls) if (((Point)lblc.Tag).X == x && ((Point)lblc.Tag).Y == y) lbl = lblc; //находим lbl 
+                        if (lbl.Text != "") gov += $"{int.Parse(lbl.Text):D2}";
+                        else gov += "00";
                 }
             }
         }
 
-        private Color ApplyGray(Color original, float da)
+        private void lblg_Click(object sender, EventArgs e)
+        {
+            Label lbl = (Label)sender; //нажатая label
+            vl = 0;
+
+            if (lbl.Text != "") vl = int.Parse(lbl.Text); //заталкиваем текст из label
+            if (vl >= grdb.GetLength(1))
+            {
+                //очищаем клетку
+                vl = 0;
+                lbl.Text = "";
+                lbl.BackColor = cc;
+
+            }
+            else 
+            {
+                //заполняем клетку
+                vl++;
+                lbl.Text = vl.ToString();
+                lbl.BackColor = ApplyGray(cc, 30);
+               
+            } 
+
+            gog = ""; //обнуляем
+
+            //алгоритм превращения горизонтали в gog
+            for (int y = 0; y < 3; y++)
+            {
+                for (int x = 0; x < grdb.GetLength(0); x++)
+                {
+                    foreach (Label lblc in pnlg.Controls) if (((Point)lblc.Tag).X == x && ((Point)lblc.Tag).Y == y) lbl = lblc; //находим lbl 
+                    if (lbl.Text != "") gog += $"{int.Parse(lbl.Text):D2}";
+                    else gog += "00";
+                }
+            }
+        }
+
+        private Color ApplyGray(Color original, float da) //применяем gray на любой входной цвет
         {
             return Color.FromArgb(
                 original.A,
@@ -308,7 +314,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 (int)(original.B * (1 - da / 100) * 0.8 + 211 * 0.2));
         }
 
-        private void buttonApply_Click(object sender, EventArgs e)
+        private void buttonApply_Click(object sender, EventArgs e) //технически просто все перезапускаем
         {
             clear();
             change_game();
@@ -330,19 +336,20 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             foreach (Label lbl in pnlv.Controls)
             {
                 lbl.BackColor = cc; // перекрашиваем
-                lbl.Text = "";
+                lbl.Text = ""; //очищаем
             }
 
             foreach (Label lbl in pnlg.Controls)
             {
                 lbl.BackColor = cc; // перекрашиваем
-                lbl.Text = "";
+                lbl.Text = ""; //очищаем
             }
 
             //очищаем
             gov = "";
             gog = "";
 
+            //очищаем поле
             for (int y = 0; y < grdb.GetLength(1); y++)
             {
                 for (int x = 0; x < grdb.GetLength(0); x++)
@@ -352,37 +359,44 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             }
         }
 
-        private void btnsave_Click(object sender, EventArgs e)
+        private void btnsave_Click(object sender, EventArgs e) //экспорт
         {
-            string notv = "";
+            string notv = ""; //то что натыкал юзер
             for (int y = 0; y < grdb.GetLength(1); y++)
             {
                 for (int x = 0; x < grdb.GetLength(0); x++)
                 {
-                    notv += grdb[x, y];
+                    notv += grdb[x, y]; //заполняем
                 }
             }
+
+            //проверки
             if (notv.Contains("1"))
             {
                 if (gov != "")
                 { 
                     if (gog != "")
                     {
+                        //заталкиваем всю созданную инфу в level
                         level = $"{numx.Value}x{numy.Value}\n";
                         level += $"{numb.Value}\n";
                         level += $"{cc.A},{cc.R},{cc.G},{cc.B}\n";
                         level += $"{gov}\n{gog}\n";
                         level += $"{notv}";
 
+                        //открываем openfiledialog
                         SaveFileDialog saveFileDialog = new SaveFileDialog();
                         saveFileDialog.Filter = "Level files (*.lvl)|*.lvl|All files (*.*)|*.*";
                         saveFileDialog.FileName = $"{lblgame.Text}.lvl";
                         if (saveFileDialog.ShowDialog() == DialogResult.OK)
                         {
+                            //сохраняем
                             string filepath = saveFileDialog.FileName;
                             FileStream lvl = new FileStream(filepath, FileMode.Create);
                             StreamWriter lvlf = new StreamWriter(lvl);
                             lvlf.WriteLine(level);
+
+                            //закрываем
                             lvlf.Close();
                             lvlf.Dispose();
                             lvl.Dispose();
@@ -396,12 +410,17 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
             else MessageBox.Show("Game field is empty", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
          
-        private void piccolor_Click(object sender, EventArgs e)
+        private void piccolor_Click(object sender, EventArgs e) //цвет который задает пользователь
         {
             if (CD.ShowDialog() == DialogResult.OK)
             {
                 piccolor.BackColor = CD.Color;
             }
+        }
+
+        private void pnlpole_Leave(object sender, EventArgs e) //убираем крестик когда пользователь не взаимодействует с полем
+        {
+            foreach (Button btn in pnlpole.Controls) if (btn.BackColor == ApplyGray(cc, 30)) btn.BackColor = cc;
         }
     }
 }
