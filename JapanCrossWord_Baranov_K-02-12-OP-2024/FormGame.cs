@@ -408,7 +408,7 @@ namespace JapanCrossWord_Baranov_K_02_12_OP_2024
                 sec = 0;
                 min++;
             }
-            if (min >= 60) //зачем считать часы?
+            if (min >= 60) //зачем считать часы, правильно?
             {
                 time.Stop();
                 lblt.Text += "+";
